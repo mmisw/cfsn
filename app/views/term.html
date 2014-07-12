@@ -1,0 +1,55 @@
+<div ng-show="termDetails.found">
+
+    <table>
+        <tr style="vertical-align: baseline">
+            <td>
+                <h3>{{termName}}</h3>
+            </td>
+            <td>
+                <table class="links">
+                    <tr>
+                        <td>
+                            <a class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=rdf'}}">rdf</a>
+                        </td>
+                        <td>
+                            <a class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=json'}}">json</a>
+                        </td>
+                        <td>
+                            <a class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=n3'}}">n3</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+    <div style="margin-left: 30px">
+
+        <table class="term">
+            <tr>
+                <td>Description:</td>
+                <td ng-bind-html="termDetails.description"></td>
+            </tr>
+            <tr>
+                <td>Canonical units:</td>
+                <td ng-bind-html="termDetails.canonicalUnits"></td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<div ng-show="!termDetails.found">
+    <h3>Unexistent term: <span style="color: darkred">{{termName}}</span></h3>
+    <div>
+        Perform a search with this string:
+        <a ng-href="#/search/{{termName}}">
+            <span style="color: darkred">{{termName}}</span></a>
+    </div>
+</div>
+
+<div ng-show="termDetails.searching">
+    <h3>Searching ...</h3>
+</div>

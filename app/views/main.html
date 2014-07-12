@@ -1,0 +1,39 @@
+<div>
+    <h3>Number of terms: {{termList.length}}</h3>
+
+    <div style="margin-left: 30px">
+
+        <input class="form-control ng-valid" type="text" ng-model="termListFilter" placeholder="Search"
+                ng-keypress="searchKeyPressed($event)">
+
+        <table ng-show="termList.length > 0"
+               tr-ng-grid=""
+               items="termList"
+               selection-mode="None"
+               filter-by="termListFilter"
+               page-items="21"
+               enable-filtering="false"
+        >
+            <thead>
+                <tr>
+                    <th field-name="name"            enable-filtering="false"></th>
+                    <th field-name="description"     enable-filtering="false"></th>
+                    <th field-name="canonicalUnits"  enable-filtering="false"></th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td field-name="name" style="white-space: nowrap;">
+                    <div ng-bind-html="gridItem.name"></div>
+                </td>
+                <td field-name="description">
+                    <div ng-bind-html="gridItem.description"></div>
+                </td>
+                <td field-name="canonicalUnits">
+                    <div ng-bind-html="gridItem.canonicalUnits"></div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
