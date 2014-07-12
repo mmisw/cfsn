@@ -1,0 +1,33 @@
+{
+  "name": "trNgGrid",
+  "homepage": "https://github.com/MoonStorm/trNgGrid",
+  "authors": [
+    "MoonStorm <MoonStorm@gmail.com>"
+  ],
+  "description": "trNgGrid is a feature rich declarative data grid based on the popular AngularJs framework and making use of plain simple table HTML elements.",
+  "main": [
+    "./release/trNgGrid.min.js",
+    "./release/trNgGrid.min.css"
+  ],
+  "keywords": [
+    "angular",
+    "html",
+    "table",
+    "grid"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=2.0.3",
+    "angular": ">=1.2.9"
+  },
+  "_release": "3a01431bc7",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "3a01431bc713287baefd9323671e509926d0d15d"
+  },
+  "_source": "git://github.com/MoonStorm/trNgGrid.git",
+  "_target": "*",
+  "_originalSource": "trNgGrid",
+  "_direct": true
+}
