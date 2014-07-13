@@ -78,6 +78,14 @@ var vutil = (function () {
 
     }
 
+    // lowercase letters with embedded underscores
+    var embeddedStdNameRegex = /(\W)(([a-z]+_[a-z]+)+)(\W)/g;
+
+    function mklinks4embeddedStdName(stdName, p1, p2, p3, p4) {
+        var link = '<a href="#/' + p2 + '">' + p2 + '</a>';
+        return p1 + link + p4;
+    }
+
     function htmlifyObject(value) {
         if (/^<([^>]*)>$/.test(value)) {
             // it is an uri.
@@ -88,6 +96,7 @@ var vutil = (function () {
             value = value.replace(/\\"/g, '"');
 
             value = value.replace(/^"(.*)"$/, '$1');
+
             // string with language tag?
             var m = value.match(/^("[^"]+")(@[A-Za-z\-]+)$/);
             if (m) {
@@ -97,8 +106,10 @@ var vutil = (function () {
             else {
                 value = vutil.mklinks4text(value);
             }
+
+            value = value.replace(embeddedStdNameRegex, mklinks4embeddedStdName);
         }
-        return value
+        return value;
     }
 
     function htmlifyUri(uri, text4link) {
