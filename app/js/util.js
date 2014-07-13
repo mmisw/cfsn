@@ -78,12 +78,13 @@ var vutil = (function () {
 
     }
 
-    // lowercase letters with embedded underscores
-    var embeddedStdNameRegex = /(\W)(([a-z]+_[a-z]+)+)(\W)/g;
+    // regex to recognize std names within a text.
+    // for now, only those lowercase words having embedded underscores, which are
+    // the majority. TODO recognize std names not having underscores.
+    var stdNameRegex = /\b(([a-z]+_[a-z]+)+)\b/g;
 
-    function mklinks4embeddedStdName(stdName, p1, p2, p3, p4) {
-        var link = '<a href="#/' + p2 + '">' + p2 + '</a>';
-        return p1 + link + p4;
+    function mklinks4stdName(stdName, p1) {
+        return '<a href="#/' + p1 + '">' + p1 + '</a>';
     }
 
     function htmlifyObject(value) {
@@ -107,7 +108,7 @@ var vutil = (function () {
                 value = vutil.mklinks4text(value);
             }
 
-            value = value.replace(embeddedStdNameRegex, mklinks4embeddedStdName);
+            value = value.replace(stdNameRegex, mklinks4stdName);
         }
         return value;
     }
