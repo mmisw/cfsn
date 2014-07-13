@@ -5,21 +5,6 @@
             <td>
                 <h3>{{termName}}</h3>
             </td>
-            <td>
-                <table class="links">
-                    <tr>
-                        <td>
-                            <a class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=rdf'}}">rdf</a>
-                        </td>
-                        <td>
-                            <a class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=json'}}">json</a>
-                        </td>
-                        <td>
-                            <a class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=n3'}}">n3</a>
-                        </td>
-                    </tr>
-                </table>
-            </td>
         </tr>
     </table>
 
@@ -38,6 +23,27 @@
         </table>
 
     </div>
+
+
+    <div style="margin-left: 30px">
+
+        <h5>Links:</h5>
+        <table class="links2">
+            <tr>
+                <td>MMI ORR:</td>
+                <td>
+                    <div class="btn-toolbar btn-group-xs">
+                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink}}">{{externalLink}}</a>
+                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=rdf'}}">rdf</a>
+                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=json'}}">json</a>
+                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=n3'}}">n3</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
 
 </div>
 

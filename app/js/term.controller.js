@@ -31,13 +31,13 @@ function getTermDetails($scope, dataService) {
             //console.log("gotTermDetails: ", termDetails);
 
             if (termDetails) {
+                $scope.externalLink = cfsnConfig.snPrefix + $scope.termName;
                 $scope.termDetails = {
                     found:          true,
                     description:    processContent(termDetails.definition),
-                    canonicalUnits: processContent(termDetails.canonicalUnits)
+                    canonicalUnits: processContent(termDetails.canonicalUnits),
+                    orrUri:        '<a href="' +$scope.externalLink+ '">' + $scope.externalLink + '</a>'
                 };
-
-                $scope.externalLink = cfsnConfig.snPrefix + $scope.termName;
             }
             else {
                 $scope.termDetails = {found: false};

@@ -101,7 +101,6 @@ table.term td {
 
 table.links {
     font-size: x-small;
-    padding-left: px;
     /*border: 1px solid #8cacbb;*/
 }
 table.links th {
@@ -110,4 +109,17 @@ table.links th {
 }
 table.links td {
   padding: 2px;
+}
+
+
+table.links2 {
+    font-size: small;
+    margin-left: 30px;
+    /*border: none;*/
+}
+table.links2 th {
+    padding: 5px;
+}
+table.links2 td {
+    padding: 5px;
 }
