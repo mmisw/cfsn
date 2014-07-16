@@ -9,7 +9,7 @@ angular.module('cfsn', [
         'cfsn.term.controller'
     ])
 
-    .value('version', '0.0.1')
+    .value('version', '0.0.2')
 
     .directive('appVersion', ['version', function(version) {
         return function(scope, elm, attrs) {
