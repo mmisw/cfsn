@@ -131,6 +131,15 @@ var vutil = (function () {
         return link;
     }
 
+    // removes the prefix
+    function getTermName(name) {
+        var termName = name.replace(/^<(.*)>$/, '$1');
+        if (termName.indexOf(cfsnConfig.snPrefix) == 0) {
+            termName = termName.substring(cfsnConfig.snPrefix.length);
+        }
+        return termName;
+    }
+
     return {
         mklinks4uri:         mklinks4uri,
         mklinks4text:        mklinks4text,
@@ -138,6 +147,7 @@ var vutil = (function () {
         loadingSnippet:      '<div class="loading"> loading</div>',
         htmlifyObject:       htmlifyObject,
         htmlifyUri:          htmlifyUri,
-        htmlifyTerm:         htmlifyTerm
+        htmlifyTerm:         htmlifyTerm,
+        getTermName:         getTermName
     };
 })();
