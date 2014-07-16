@@ -46,7 +46,7 @@ function getTermList($scope, dataService) {
             $scope.termList = _.map(termList, function(term) { // with htmlified or escaped uri's
                 return {
                     name:           prepareName(term.name),
-                    description:    vutil.htmlifyObject(term.definition),
+                    description:    vutil.htmlifyObject(term.definition, dataService.cachedTermDict()),
                     canonicalUnits: vutil.htmlifyObject(term.canonicalUnits)
                 };
             });

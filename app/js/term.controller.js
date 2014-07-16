@@ -22,7 +22,7 @@ function getTermDetails($scope, dataService) {
     var htmlify = true;
 
     function processContent(content) {
-        return htmlify ? vutil.htmlifyObject(content) : _.escape(content);
+        return htmlify ? vutil.htmlifyObject(content, dataService.cachedTermDict()) : _.escape(content);
     }
 
     $scope.termDetails.searching = true;

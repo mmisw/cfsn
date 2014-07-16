@@ -112,6 +112,7 @@ angular.module('cfsn.data', [])
             }
 
             return {
+                cachedTermDict:   function() { return cache.termDict; },
                 getTermList:      getTermList,
                 getTermDetails:   getTermDetails
             };

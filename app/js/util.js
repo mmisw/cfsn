@@ -78,16 +78,29 @@ var vutil = (function () {
 
     }
 
-    // regex to recognize std names within a text.
-    // for now, only those lowercase words having embedded underscores, which are
-    // the majority. TODO recognize std names not having underscores.
-    var stdNameRegex = /\b(([a-z]+_[a-z]+)+)\b/g;
+    // regex to recognize potential std names within a text:
+    // letters possibly having embedded underscores.
+    var stdNameRegex = /\b(([a-z]+(_|[a-z])+)+)\b/gi;
 
-    function mklinks4stdName(stdName, p1) {
-        return '<a href="#/' + p1 + '">' + p1 + '</a>';
-    }
+    /**
+     * Gets HTML for the given value. If stdNames is given, then those words
+     * in the value are hyperlinked to corresponding term pages. If not,
+     * words with letters and underscores are hyperlinked to the "/search/" route.
+     */
+    function htmlifyObject(value, stdNames) {
 
-    function htmlifyObject(value) {
+        function mklinks4stdName(stdName, p1) {
+            if ((stdNames && p1.toLowerCase() in stdNames)) {
+                return '<a class="stdname" href="#/' + p1.toLowerCase() + '">' + p1 + '</a>';
+            }
+            else if (p1.indexOf('_') >= 0) {
+                return '<a class="search" href="#/search/' + p1 + '">' + p1 + '</a>';
+            }
+            else {
+                return p1;
+            }
+        }
+
         if (/^<([^>]*)>$/.test(value)) {
             // it is an uri.
             value = vutil.mklinks4uri(value, true);

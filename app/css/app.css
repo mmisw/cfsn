@@ -123,3 +123,12 @@ table.links2 th {
 table.links2 td {
     padding: 5px;
 }
+
+
+a.stdname {
+    color: steelblue;
+}
+
+a.search {
+    color: seagreen;
+}
