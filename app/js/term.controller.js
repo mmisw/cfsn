@@ -9,7 +9,7 @@ angular.module('cfsn.term.controller', ['trNgGrid'])
             $scope.works = Works.works;
 
             $scope.termName = $routeParams.term;
-            console.log("$scope.term=", $scope.term);
+            //console.log("$scope.termName=", $scope.termName);
 
             $scope.termDetails = {};
             getTermDetails($scope, dataService);

@@ -35,11 +35,7 @@ function getTermList($scope, dataService) {
     var htmlify = true;
 
     function prepareName(name) {
-        name = name.replace(/^<(.*)>$/, '$1');
-        var termName = name;
-        if (termName.indexOf(cfsnConfig.snPrefix) == 0) {
-            termName = termName.substring(cfsnConfig.snPrefix.length);
-        }
+        var termName = vutil.getTermName(name);
         return htmlify ? vutil.htmlifyTerm(termName, name) : _.escape(termName)
     }
 
