@@ -78,12 +78,21 @@ angular.module('cfsn', [
     }])
 
     .run(['$rootScope', '$location', '$window', function($rootScope, $location, $window) {
-        if (!/localhost:/.test($window.location.host)) {
-            $rootScope.$on('$routeChangeSuccess', function(event) {
-                if ($window.ga) {
-                    $window.ga('send', 'pageview', { page: $location.path() });
-                }
-            });
+        // note: $location.search() doesn't seem to always capture the actual query params,
+        // so use $window.location.search, which seems to work better.
+        //console.log("$window.location.search=", $window.location.search);
+        //console.log("$location search=", $location.search());
+
+        if (/localhost:/.test($window.location.host) ||
+            /_noga/.test($window.location.search)
+        ) {
+            console.log("not enabling ga");
+            return;
         }
+        $rootScope.$on('$routeChangeSuccess', function(event) {
+            if ($window.ga) {
+                $window.ga('send', 'pageview', { page: $location.path() });
+            }
+        });
     }])
 ;

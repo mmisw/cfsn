@@ -135,12 +135,13 @@ a.search {
 
 input.search {
     width: 500px !important;
-    height: 20px;
+    height: 25px;
+    font-size: small;
 }
 
 input.pageSize {
     width: 50px !important;
-    height: 20px;
+    height: 25px;
     font-size: small;
 }
 
