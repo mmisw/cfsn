@@ -118,9 +118,10 @@ angular.module('cfsn.data', [])
 
                 $http.get(cfsnConfig.nerc.sparqlEndpoint, {params: {query: query, output: 'json'}})
                     .success(function (data, status, headers, config) {
-                        console.log("getNercTermUri: data= ", data);
+                        //console.log("getNercTermUri: data= ", data);
+                        // TODO more appropriate check of the response
                         var uri = data.results.bindings[0].uri.value;
-                        console.log("getNercTermUri: uri= ", uri);
+                        //console.log("getNercTermUri: uri= ", uri);
                         fns.gotNercTermUri(uri);
                     }
                 );
