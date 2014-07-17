@@ -2,13 +2,44 @@
 
 angular.module('cfsn.main.controller', ['trNgGrid'])
 
-    .controller('MainCtrl', ['$scope', '$routeParams', '$location', 'dataService', 'Works',
-        function ($scope, $routeParams, $location, dataService, Works) {
+    .controller('MainCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'dataService', 'Works',
+        function ($scope, $routeParams, $location, $timeout, dataService, Works) {
 
             Works.works.removeAll();
             $scope.works = Works.works;
 
             $scope.termListFilter = $routeParams.search ? $routeParams.search : "";
+
+            (function preparePageSize() {
+                $scope.pageSize = 25;
+                $scope.pageSizeEnter = $scope.pageSize;
+
+                function setSize(newSize) {
+                    $scope.pageSizeEnter = newSize;
+                    $timeout(function() {
+                        $scope.pageSize = $scope.pageSizeEnter;
+                        $scope.$digest();
+                    }, 500);
+                }
+
+                $scope.pageSizeKeyPressed = function($event) {
+                    if ($event.keyCode == 13) {
+                        if ($scope.pageSizeEnter.trim().length == 0) {
+                            setSize("");
+                        }
+                        else {
+                            var num = parseInt($scope.pageSizeEnter);
+                            if (!isNaN(num) && num > 0)  {
+                                setSize(num);
+                            }
+                        }
+                    }
+                };
+                $scope.showAll = function() {
+                    $scope.pageSizeEnter = "";
+                    $scope.pageSize = undefined;
+                };
+            })();
 
             $scope.termList = [];
 

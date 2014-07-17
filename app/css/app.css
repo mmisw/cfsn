@@ -132,3 +132,29 @@ a.stdname {
 a.search {
     color: seagreen;
 }
+
+input.search {
+    width: 500px !important;
+    height: 20px;
+}
+
+input.pageSize {
+    width: 50px !important;
+    height: 20px;
+    font-size: small;
+}
+
+
+table.mynav {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #8cacbb;
+}
+table.mynav th {
+    padding: 2px;
+    border: 1px solid #8cacbb;
+    background-color: #dee7ec;
+}
+table.mynav td {
+    padding-left: 5px;
+}

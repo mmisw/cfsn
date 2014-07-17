@@ -1,18 +1,45 @@
 <div>
 
-    <h5>Total: {{termList.length}}</h5>
-
+    <h5></h5>
     <div style="margin-left: 30px">
 
-        <input class="form-control ng-valid" type="text" ng-model="termListFilter" placeholder="Search"
-                ng-keypress="searchKeyPressed($event)">
+
+        <!--<table style="width: 100%">-->
+        <table class="mynav">
+            <tr style="vertical-align: middle; background-color: aliceblue; border: #bdf0ed">
+                <td style="width: 21px">
+                      <span class="glyphicon glyphicon-search"></span>
+                </td>
+                <td>
+                      <input type="text" class="search ng-valid form-control" placeholder="Search"
+                              ng-model="termListFilter" ng-keypress="searchKeyPressed($event)">
+                </td>
+
+                <td style="width: 100px">
+                        <label style="color: #a1bfc6; font-size: small">Total: {{termList.length}}</label>
+                </td>
+
+                <td style="width: 70px">
+                        <label style="color: #a1bfc6; font-size: small" for="pageSizeEnter">Page size:</label>
+                </td>
+                <td style="width: 50px">
+                    <input id="pageSizeEnter" type="text" class="form-control ng-valid pageSize"
+                          ng-model="pageSizeEnter" ng-keypress="pageSizeKeyPressed($event)">
+                </td>
+
+                <td style="width: 100px">
+                    <button type="submit" class="btn btn-default btn-xs" ng-click="showAll()">Show all</button>
+                </td>
+
+            </tr>
+        </table>
 
         <table ng-show="termList.length > 0"
                tr-ng-grid=""
                items="termList"
                selection-mode="None"
                filter-by="termListFilter"
-               page-items="21"
+               page-items="pageSize"
                enable-filtering="false"
         >
             <thead>
