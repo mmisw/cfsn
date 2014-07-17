@@ -114,14 +114,19 @@ table.links td {
 
 table.links2 {
     font-size: small;
-    margin-left: 30px;
-    /*border: none;*/
+    border-spacing: 20px;
+    border: 1px solid #8cacbb;
 }
 table.links2 th {
     padding: 5px;
 }
 table.links2 td {
     padding: 5px;
+}
+table.links2 tr {
+    border-spacing: 20px;
+    border: 1px solid #8cacbb;
+    margin: 30px !important;
 }
 
 
