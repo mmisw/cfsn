@@ -78,10 +78,12 @@ angular.module('cfsn', [
     }])
 
     .run(['$rootScope', '$location', '$window', function($rootScope, $location, $window) {
-        $rootScope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-            if ($window.ga) {
-                $window.ga('send', 'pageview', { page: $location.path() });
-            }
-        });
+        if (!/localhost:/.test($window.location.host)) {
+            $rootScope.$on('$routeChangeSuccess', function(event) {
+                if ($window.ga) {
+                    $window.ga('send', 'pageview', { page: $location.path() });
+                }
+            });
+        }
     }])
 ;
