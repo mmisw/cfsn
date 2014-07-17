@@ -11,5 +11,13 @@ var cfsnConfig = {
     predicates: {
         definition:      'http://www.w3.org/2004/02/skos/core#definition',
         canonicalUnits:  'http://mmisw.org/ont/cf/parameter/canonical_units'
+    },
+
+
+    nerc: {
+        sparqlEndpoint: 'http://vocab.nerc.ac.uk/sparql/sparql',
+        uriQueryTemplate:
+            'select distinct ?uri {?uri <http://www.w3.org/2004/02/skos/core#prefLabel> "{{stdname}}"@en .}'
     }
+
 };

@@ -26,6 +26,7 @@ function getTermDetails($scope, dataService) {
     }
 
     $scope.termDetails.searching = true;
+    $scope.nercExternalLink = undefined;
     dataService.getTermDetails($scope.termName, {
         gotTermDetails: function(termDetails) {
             //console.log("gotTermDetails: ", termDetails);
@@ -38,6 +39,8 @@ function getTermDetails($scope, dataService) {
                     canonicalUnits: processContent(termDetails.canonicalUnits),
                     orrUri:        '<a href="' +$scope.externalLink+ '">' + $scope.externalLink + '</a>'
                 };
+
+                dataService.getNercTermUri($scope.termName, {gotNercTermUri: gotNercTermUri});
             }
             else {
                 $scope.termDetails = {found: false};
@@ -48,4 +51,8 @@ function getTermDetails($scope, dataService) {
             $scope.works.remove(workId);
         }
     });
+
+    function gotNercTermUri(uri) {
+        $scope.nercExternalLink = uri;
+    }
 }

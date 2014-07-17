@@ -111,9 +111,26 @@ angular.module('cfsn.data', [])
                 );
             }
 
+            function getNercTermUri(termName, fns) {
+
+                var query = cfsnConfig.nerc.uriQueryTemplate.replace('{{stdname}}', termName);
+                console.log("making query: " + query + "\nagainst: " +cfsnConfig.nerc.sparqlEndpoint);
+
+                $http.get(cfsnConfig.nerc.sparqlEndpoint, {params: {query: query, output: 'json'}})
+                    .success(function (data, status, headers, config) {
+                        console.log("getNercTermUri: data= ", data);
+                        var uri = data.results.bindings[0].uri.value;
+                        console.log("getNercTermUri: uri= ", uri);
+                        fns.gotNercTermUri(uri);
+                    }
+                );
+            }
+
             return {
                 cachedTermDict:   function() { return cache.termDict; },
                 getTermList:      getTermList,
-                getTermDetails:   getTermDetails
+                getTermDetails:   getTermDetails,
+
+                getNercTermUri:   getNercTermUri
             };
         }]);
