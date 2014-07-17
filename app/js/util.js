@@ -161,6 +161,7 @@ var vutil = (function () {
         htmlifyObject:       htmlifyObject,
         htmlifyUri:          htmlifyUri,
         htmlifyTerm:         htmlifyTerm,
-        getTermName:         getTermName
+        getTermName:         getTermName,
+        options:             {pageSize: 25}
     };
 })();

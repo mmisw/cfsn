@@ -11,13 +11,13 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
             $scope.termListFilter = $routeParams.search ? $routeParams.search : "";
 
             (function preparePageSize() {
-                $scope.pageSize = 25;
+                $scope.pageSize = vutil.options.pageSize;
                 $scope.pageSizeEnter = $scope.pageSize;
 
                 function setSize(newSize) {
                     $scope.pageSizeEnter = newSize;
                     $timeout(function() {
-                        $scope.pageSize = $scope.pageSizeEnter;
+                        vutil.options.pageSize = $scope.pageSize = $scope.pageSizeEnter;
                         $scope.$digest();
                     }, 500);
                 }
@@ -37,7 +37,7 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
                 };
                 $scope.showAll = function() {
                     $scope.pageSizeEnter = "";
-                    $scope.pageSize = undefined;
+                    vutil.options.pageSize = $scope.pageSize = undefined;
                 };
             })();
 
