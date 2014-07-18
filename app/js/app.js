@@ -3,6 +3,7 @@
 angular.module('cfsn', [
         'ngRoute',
         'ngSanitize',
+        'ngCookies',
         'cfsn.data',
         'cfsn.filters',
         'cfsn.main.controller',
@@ -77,16 +78,14 @@ angular.module('cfsn', [
         };
     }])
 
-    .run(['$rootScope', '$location', '$window', function($rootScope, $location, $window) {
-        // note: $location.search() doesn't seem to always capture the actual query params,
-        // so use $window.location.search, which seems to work better.
-        //console.log("$window.location.search=", $window.location.search);
-        //console.log("$location search=", $location.search());
-
-        if (/localhost:/.test($window.location.host) ||
-            /_noga/.test($window.location.search)
-        ) {
-            console.log("not enabling ga");
+    .run(['$cookies', '$rootScope', '$location', '$window', function($cookies, $rootScope, $location, $window) {
+        console.log("$cookies", JSON.stringify($cookies));
+        if ($cookies.mmisw_cfsn_noga) {
+            console.log("not enabling ga per cookie");
+            return;
+        }
+        if (/localhost:/.test($window.location.host)) {
+            console.log("not enabling ga on localhost");
             return;
         }
         $rootScope.$on('$routeChangeSuccess', function(event) {
