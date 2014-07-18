@@ -79,7 +79,6 @@ angular.module('cfsn', [
     }])
 
     .run(['$cookies', '$rootScope', '$location', '$window', function($cookies, $rootScope, $location, $window) {
-        console.log("$cookies", JSON.stringify($cookies));
         if ($cookies.mmisw_cfsn_noga) {
             console.log("not enabling ga per cookie");
             return;
