@@ -19,7 +19,11 @@ angular.module('cfsn.data', [])
              * and all at once for the full list request.
              * cache.termList: version for the grid widget.
              */
-            var cache = {termDict: {}, termList: undefined};
+            var cache = {
+                termDict: {},
+                termList: undefined,
+                nercDict: {}
+            };
 
             /**
              * Customized error handler for an http request.
@@ -128,6 +132,13 @@ angular.module('cfsn.data', [])
 
             function getNercTermUri(termName, fns) {
 
+                if (termName in cache.nercDict) {
+                    //console.log("getNercTermUri", termName, "in cache");
+                    var uri = cache.nercDict[termName].uri;
+                    fns.gotNercTermUri(undefined, uri);
+                    return;
+                }
+
                 var query = cfsnConfig.nerc.uriQueryTemplate.replace('{{stdname}}', termName);
                 console.log("making query: " + query + "\nagainst: " +cfsnConfig.nerc.sparqlEndpoint);
 
@@ -137,6 +148,7 @@ angular.module('cfsn.data', [])
                         // TODO more appropriate check of the response
                         var uri = data.results.bindings[0].uri.value;
                         //console.log("getNercTermUri: uri= ", uri);
+                        cache.nercDict[termName] = {uri: uri};
                         fns.gotNercTermUri(undefined, uri);
                     })
                     .error(httpErrorHandler(fns.gotNercTermUri));
