@@ -21,11 +21,26 @@ angular.module('cfsn.data', [])
              */
             var cache = {termDict: {}, termList: undefined};
 
+            /**
+             * Customized error handler for an http request.
+             * @param cb         callback to report error.
+             * @returns {Function}  handler
+             */
+            var httpErrorHandler = function(cb) {
+                return function(data, status, headers, config) {
+                    var reqMsg = config.method + " '" + config.url + "'";
+                    var error = "An error occured with HTTP request: " +reqMsg;
+                    //error += "<br/> query: " + _.escape(config.params.query).replace(/\n/, '<br/>');
+                    error += "<br/>Status: " + status;
+                    cb(error);
+                };
+            };
+
             function getTermList(fns) {
 
                 if (cache.termList) {
                     //console.log("termList in cache");
-                    fns.gotTermList(cache.termList);
+                    fns.gotTermList(undefined, cache.termList);
                     return;
                 }
 
@@ -66,9 +81,9 @@ angular.module('cfsn.data', [])
                             };
                         });
 
-                        fns.gotTermList(cache.termList);
-                    }
-                );
+                        fns.gotTermList(undefined, cache.termList);
+                    })
+                    .error(httpErrorHandler(fns.gotTermList));
             }
 
             function getTermDetails(termName, fns) {
@@ -76,7 +91,7 @@ angular.module('cfsn.data', [])
                 if (termName in cache.termDict) {
                     //console.log("term", termName, "in cache");
                     var termDetails = cache.termDict[termName];
-                    fns.gotTermDetails(termDetails);
+                    fns.gotTermDetails(undefined, termDetails);
                     return;
                 }
 
@@ -100,15 +115,15 @@ angular.module('cfsn.data', [])
                                 canonicalUnits: rows[0][1]
                             };
                             cache.termDict[termName] = termDetails;
-                            fns.gotTermDetails(termDetails);
+                            fns.gotTermDetails(undefined, termDetails);
                             return;
                         }
                         if (rows.length > 1) {
                             console.log("WARN: unexpected number of results: ", rows.length);
                         }
-                        fns.gotTermDetails(undefined);
-                    }
-                );
+                        fns.gotTermDetails("WARN: unexpected number of results: ", rows.length);
+                    })
+                    .error(httpErrorHandler(fns.gotTermDetails));
             }
 
             function getNercTermUri(termName, fns) {
@@ -122,9 +137,9 @@ angular.module('cfsn.data', [])
                         // TODO more appropriate check of the response
                         var uri = data.results.bindings[0].uri.value;
                         //console.log("getNercTermUri: uri= ", uri);
-                        fns.gotNercTermUri(uri);
-                    }
-                );
+                        fns.gotNercTermUri(undefined, uri);
+                    })
+                    .error(httpErrorHandler(fns.gotNercTermUri));
             }
 
             return {

@@ -36,49 +36,61 @@ angular.module('cfsn', [
     }])
 
     .factory('Works', ['$rootScope', function($rootScope) {
-        var nextWorkId = 0;
-        var worksById = {};
+        var works  = new ItemList();
+        var errors = new ItemList();
 
-        var works = {
-            add: function(w) {
-                var id = ++nextWorkId;
-                worksById[id] = w;
-                return id;
-            },
-            has:  function(id) {
-                return worksById[id] !== undefined;
-            },
-            remove:  function(id) {
-                var w = worksById[id];
-                delete worksById[id];
-                return w;
-            },
-            update:  function(id, w) {
-                worksById[id] = w;
-            },
-            removeAll: function() {
-                worksById = {};
-            },
-            any:  function() {
-                if (_.size(worksById) > 0) {
-                    for (var id in worksById) {
-                        if (worksById.hasOwnProperty(id)) {
-                            return worksById[id];
-                        }
-                    }
-                }
-                return undefined;
-            }
-        };
-
-        $rootScope.works = works;
+        $rootScope.works  = works;
+        $rootScope.errors = errors;
 
         return {
-            works: works
+            works:  works,
+            errors: errors
         };
+
+        function ItemList() {
+            var nextId = 0;
+            var byId = {};
+            return {
+                add: function(w) {
+                    var id = ++nextId;
+                    byId[id] = w;
+                    return id;
+                },
+                has:  function(id) {
+                    return byId[id] !== undefined;
+                },
+                remove:  function(id) {
+                    var w = byId[id];
+                    delete byId[id];
+                    return w;
+                },
+                update:  function(id, w) {
+                    byId[id] = w;
+                },
+                removeAll: function() {
+                    byId = {};
+                },
+                any:  function() {
+                    if (_.size(byId) > 0) {
+                        for (var id in byId) {
+                            if (byId.hasOwnProperty(id)) {
+                                return byId[id];
+                            }
+                        }
+                    }
+                    return undefined;
+                }
+            }
+        }
     }])
 
-    .run(['$cookies', '$rootScope', '$location', '$window', function($cookies, $rootScope, $location, $window) {
+    .run(['$cookies', '$rootScope', '$location', '$window', 'Works', function($cookies, $rootScope, $location, $window, Works) {
+
+        $rootScope.$on('$routeChangeStart', function(event) {
+            // crear errors:
+            Works.errors.removeAll();
+        });
+
         if ($cookies.mmisw_cfsn_noga) {
             console.log("not enabling ga per cookie");
             return;

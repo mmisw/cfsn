@@ -43,6 +43,9 @@
   <div class="status" ng-show="works.any()">
       <div class="loading" ng-bind="works.any()"></div>
   </div>
+  <div class="alert alert-warning" role="alert"
+      ng-show="errors.any()" ng-bind-html="errors.any()">
+  </div>
 
   <div ng-view></div>
 

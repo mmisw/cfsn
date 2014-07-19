@@ -28,8 +28,16 @@ function getTermDetails($scope, dataService) {
     $scope.termDetails.searching = true;
     $scope.nercExternalLink = undefined;
     dataService.getTermDetails($scope.termName, {
-        gotTermDetails: function(termDetails) {
+        gotTermDetails: function(error, termDetails) {
             //console.log("gotTermDetails: ", termDetails);
+
+            if (error) {
+                $scope.termDetails = {found: false};
+                $scope.termDetails.searching = false;
+                $scope.works.remove(workId);
+                $scope.errors.add(error);
+                return;
+            }
 
             if (termDetails) {
                 $scope.externalLink = cfsnConfig.snPrefix + $scope.termName;
@@ -40,7 +48,17 @@ function getTermDetails($scope, dataService) {
                     orrUri:        '<a href="' +$scope.externalLink+ '">' + $scope.externalLink + '</a>'
                 };
 
-                dataService.getNercTermUri($scope.termName, {gotNercTermUri: gotNercTermUri});
+                dataService.getNercTermUri($scope.termName, {
+                    gotNercTermUri: function(error, uri) {
+                        $scope.termDetails.searching = false;
+                        $scope.works.remove(workId);
+                        if (error) {
+                            $scope.errors.add(error);
+                            return;
+                        }
+                        $scope.nercExternalLink = uri;
+                    }
+                });
             }
             else {
                 $scope.termDetails = {found: false};
@@ -51,8 +69,4 @@ function getTermDetails($scope, dataService) {
             $scope.works.remove(workId);
         }
     });
-
-    function gotNercTermUri(uri) {
-        $scope.nercExternalLink = uri;
-    }
 }

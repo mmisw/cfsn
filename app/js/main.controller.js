@@ -71,8 +71,15 @@ function getTermList($scope, dataService) {
     }
 
     dataService.getTermList({
-        gotTermList: function(termList) {
+        gotTermList: function(error, termList) {
             //console.log("gotTermList: ", result);
+
+            if (error) {
+                $scope.works.remove(workId);
+                $scope.error = error;
+                $scope.errors.add(error);
+                return;
+            }
 
             $scope.termList = _.map(termList, function(term) { // with htmlified or escaped uri's
                 return {
