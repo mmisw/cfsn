@@ -8,7 +8,7 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
             Works.works.removeAll();
             $scope.works = Works.works;
 
-            $scope.searchMode = 'Default';
+            $scope.searchMode = 'Literal';
             $scope.searchRegex = undefined;
 
 
@@ -75,7 +75,7 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
                 $scope.termListFilter4grid = undefined;
 
                 var searchText = $scope.termListFilter.trim();
-                if ($scope.searchMode === 'Default') {
+                if ($scope.searchMode === 'Literal') {
                     $scope.termListFilter4grid = searchText;
                 }
                 else if ($scope.searchMode === 'Glob') {
@@ -95,7 +95,7 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
             function searchSettingsChanged() {
                 var searchText = $scope.termListFilter.trim();
                 searchText = searchText.replace("?", "%3F");
-                if ($scope.searchMode === 'Default') {
+                if ($scope.searchMode === 'Literal') {
                     if (searchText.length > 0) {
                         $location.url("/search/" + searchText);
                     }
@@ -114,7 +114,7 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
             $scope.$watch('searchMode', function(searchMode) {
                 //console.log("watch searchMode", searchMode);
                 searchSettingsChanged();
-//                if (searchMode === 'Default') {
+//                if (searchMode === 'Literal') {
 //                    // returning from glob or regex search, so refresh whole term list:
 //                    getTermList($scope, dataService);
 //                }
