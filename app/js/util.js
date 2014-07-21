@@ -157,6 +157,9 @@ var vutil = (function () {
 
     // From: http://stackoverflow.com/a/5575892
     function globToRegex(glob) {
+        if (glob.trim().length == 0) {
+            glob = "*";  // #14
+        }
         var specialChars = "\\^$*+?.()|{}[]";
         var regexChars = ["^"];
         for (var i = 0; i < glob.length; ++i) {
