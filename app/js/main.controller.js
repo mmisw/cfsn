@@ -2,13 +2,30 @@
 
 angular.module('cfsn.main.controller', ['trNgGrid'])
 
-    .controller('MainCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'dataService', 'Works',
-        function ($scope, $routeParams, $location, $timeout, dataService, Works) {
+    .controller('MainCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'dataService', 'Works', 'focus',
+        function ($scope, $routeParams, $location, $timeout, dataService, Works, focus) {
 
             Works.works.removeAll();
             $scope.works = Works.works;
 
-            $scope.termListFilter = $routeParams.search ? $routeParams.search : "";
+            $scope.searchMode = 'Default';
+            $scope.searchRegex = undefined;
+
+
+            if ($routeParams.search) {
+                var s = $routeParams.search;
+                var q = s.match(/!(g|r)\/(.*)/);
+                if (q) {
+                    $scope.searchMode = q[1] == 'g' ? 'Glob' : 'Regex';
+                    $scope.termListFilter = q[2];
+                }
+                else {
+                    $scope.termListFilter = s;
+                }
+            }
+            else {
+                $scope.termListFilter = "";
+            }
 
             (function preparePageSize() {
                 $scope.pageSize = vutil.options.pageSize;
@@ -41,14 +58,44 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
                 };
             })();
 
+            $scope.totalTerms = 0;
             $scope.termList = [];
 
+            updateSearchVars();
             getTermList($scope, dataService);
 
-            $scope.searchKeyPressed = function($event) {
-                //console.log("searchKeyPressed: $event=", $event);
-                if ($event.keyCode == 13) {
-                    var searchText = $scope.termListFilter.trim();
+            $scope.stopPropagation = function($event) {
+                // avoids dropdown getting closed
+                $event.stopPropagation();
+            };
+
+            function updateSearchVars() {
+                $scope.searchRegex = undefined;
+                $scope.searchRegexError = undefined;
+                $scope.termListFilter4grid = undefined;
+
+                var searchText = $scope.termListFilter.trim();
+                if ($scope.searchMode === 'Default') {
+                    $scope.termListFilter4grid = searchText;
+                }
+                else if ($scope.searchMode === 'Glob') {
+                    $scope.searchRegex = vutil.globToRegex(searchText);
+                }
+                else if ($scope.searchMode === 'Regex') {
+                    try {
+                        $scope.searchRegex = new RegExp(searchText, 'gim');
+                    }
+                    catch (e) {
+                        $scope.searchRegexError = e.message;
+                    }
+                }
+            }
+
+            // called upon change in termListFilter or searchMode to update location
+            function searchSettingsChanged() {
+                var searchText = $scope.termListFilter.trim();
+                searchText = searchText.replace("?", "%3F");
+                if ($scope.searchMode === 'Default') {
                     if (searchText.length > 0) {
                         $location.url("/search/" + searchText);
                     }
@@ -56,7 +103,40 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
                         $location.url("/");
                     }
                 }
+                else if ($scope.searchMode === 'Glob') {
+                    $location.url("/search/!g/" + searchText);
+                }
+                else if ($scope.searchMode === 'Regex') {
+                    $location.url("/search/!r/" + searchText);
+                }
+            }
+
+            $scope.$watch('searchMode', function(searchMode) {
+                //console.log("watch searchMode", searchMode);
+                searchSettingsChanged();
+//                if (searchMode === 'Default') {
+//                    // returning from glob or regex search, so refresh whole term list:
+//                    getTermList($scope, dataService);
+//                }
+//                updateSearchVars();
+            });
+
+            $scope.$watch('termListFilter', function(newTermListFilter) {
+               updateSearchVars();
+            });
+
+            $scope.invalidSearchField = function() {
+                return $scope.searchRegexError !== undefined;
             };
+
+            $scope.searchKeyPressed = function($event) {
+                //console.log("searchKeyPressed: $event=", $event);
+                if ($event.keyCode == 13) {
+                    searchSettingsChanged();
+                }
+            };
+
+            focus('activation');
         }])
     ;
 
@@ -65,15 +145,26 @@ function getTermList($scope, dataService) {
     var workId = $scope.works.add("making term list query");
     var htmlify = true;
 
-    function prepareName(name) {
+    var prepareName = function(term) {
+        var name = term.name;
         var termName = vutil.getTermName(name);
         return htmlify ? vutil.htmlifyTerm(termName, name) : _.escape(termName)
-    }
+    };
+
+    var prepareDefinition = function(term) {
+        var def = term.definition;
+        return htmlify ? vutil.htmlifyObject(def, dataService.cachedTermDict()) : _.escape(def)
+    };
+
+    var prepareCanonicalUnits = function(term) {
+        return htmlify ? vutil.htmlifyObject(term.canonicalUnits) : _.escape(term.canonicalUnits)
+    };
 
     dataService.getTermList({
         gotTermList: function(error, termList) {
-            //console.log("gotTermList: ", result);
+            //console.log("gotTermList: ", termList);
 
+            $scope.totalTerms = 0;
             if (error) {
                 $scope.works.remove(workId);
                 $scope.error = error;
@@ -81,11 +172,23 @@ function getTermList($scope, dataService) {
                 return;
             }
 
+            $scope.totalTerms = termList.length;
+
+            if ($scope.searchRegex) {
+                var regex = $scope.searchRegex;
+                termList = _.filter(termList, function(term) {
+                    return regex.test(vutil.getTermName(term.name))
+                        || regex.test(term.definition)
+                        || regex.test(term.canonicalUnits);
+                });
+                //console.log("after applying regex", regex, ": terms=", termList);
+            }
+
             $scope.termList = _.map(termList, function(term) { // with htmlified or escaped uri's
                 return {
-                    name:           prepareName(term.name),
-                    description:    vutil.htmlifyObject(term.definition, dataService.cachedTermDict()),
-                    canonicalUnits: vutil.htmlifyObject(term.canonicalUnits)
+                    name:           prepareName(term),
+                    description:    prepareDefinition(term),
+                    canonicalUnits: prepareCanonicalUnits(term)
                 };
             });
             $scope.works.remove(workId);

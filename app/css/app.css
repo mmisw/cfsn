@@ -162,3 +162,23 @@ table.mynav th {
 table.mynav td {
     padding-left: 5px;
 }
+
+
+/* when using dropdown
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+li.margin { margin-left: 10px; }
+ul li { margin-left: 10px; }
+*/
+
+
+input.invalid {
+    color: red;
+}
+
+label.searchMode {
+    padding-left: 0;
+    padding-left: 2px;
+    color: #a1bfc6;
+    font-size: small;
+}

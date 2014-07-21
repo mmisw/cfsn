@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('cfsn', [
+        //'ui.bootstrap',
         'ngRoute',
         'ngSanitize',
         'ngCookies',
@@ -10,7 +11,7 @@ angular.module('cfsn', [
         'cfsn.term.controller'
     ])
 
-    .value('version', '0.0.6')
+    .value('version', '0.0.7')
 
     .directive('appVersion', ['version', function(version) {
         return function(scope, elm, attrs) {
@@ -28,7 +29,7 @@ angular.module('cfsn', [
                 templateUrl: 'views/term.html',
                 controller: 'TermCtrl'})
 
-            .when('/search/:search', {
+            .when('/search/:search*', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'})
 
@@ -81,6 +82,24 @@ angular.module('cfsn', [
                     return undefined;
                 }
             }
+        }
+    }])
+
+    // http://stackoverflow.com/a/18295416/830737
+    .directive('focusOn', function() {
+        return function(scope, elem, attr) {
+            scope.$on('focusOn', function(e, name) {
+                if(name === attr.focusOn) {
+                    elem[0].focus();
+                }
+            });
+        };
+    })
+    .factory('focus', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+        return function(name) {
+            $timeout(function (){
+                $rootScope.$broadcast('focusOn', name);
+            });
         }
     }])
 

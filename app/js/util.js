@@ -106,11 +106,6 @@ var vutil = (function () {
             value = vutil.mklinks4uri(value, true);
         }
         else {
-            // \"Age of sea ice\" means...  -->  "Age of sea ice" means...
-            value = value.replace(/\\"/g, '"');
-
-            value = value.replace(/^"(.*)"$/, '$1');
-
             // string with language tag?
             var m = value.match(/^("[^"]+")(@[A-Za-z\-]+)$/);
             if (m) {
@@ -153,6 +148,37 @@ var vutil = (function () {
         return termName;
     }
 
+    function cleanQuotes(value) {
+        // \"Age of sea ice\" means...  -->  "Age of sea ice" means...
+        value = value.replace(/\\"/g, '"');
+        value = value.replace(/^"(.*)"$/, '$1');
+        return value;
+    }
+
+    // From: http://stackoverflow.com/a/5575892
+    function globToRegex(glob) {
+        var specialChars = "\\^$*+?.()|{}[]";
+        var regexChars = ["^"];
+        for (var i = 0; i < glob.length; ++i) {
+            var c = glob.charAt(i);
+            switch (c) {
+                case '?':
+                    regexChars.push(".");
+                    break;
+                case '*':
+                    regexChars.push(".*");
+                    break;
+                default:
+                    if (specialChars.indexOf(c) >= 0) {
+                        regexChars.push("\\");
+                    }
+                    regexChars.push(c);
+            }
+        }
+        regexChars.push("$");
+        return new RegExp(regexChars.join(""));
+    }
+
     return {
         mklinks4uri:         mklinks4uri,
         mklinks4text:        mklinks4text,
@@ -162,6 +188,8 @@ var vutil = (function () {
         htmlifyUri:          htmlifyUri,
         htmlifyTerm:         htmlifyTerm,
         getTermName:         getTermName,
+        cleanQuotes:         cleanQuotes,
+        globToRegex:         globToRegex,
         options:             {pageSize: 25}
     };
 })();

@@ -3,20 +3,43 @@
     <h5></h5>
     <div style="margin-left: 30px">
 
-
         <!--<table style="width: 100%">-->
         <table class="mynav">
             <tr style="vertical-align: middle; background-color: aliceblue; border: #bdf0ed">
-                <td style="width: 21px">
-                      <span class="glyphicon glyphicon-search"></span>
-                </td>
-                <td>
-                      <input type="text" class="search ng-valid form-control" placeholder="Global search"
-                              ng-model="termListFilter" ng-keypress="searchKeyPressed($event)">
-                </td>
 
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width: 21px">
+                                  <span class="glyphicon glyphicon-search"></span>
+                            </td>
+                            <td>
+
+                                  <input type="text" class="search form-control" ng-class="{invalid: invalidSearchField()}" placeholder="Global search"
+                                          ng-model="termListFilter" ng-keypress="searchKeyPressed($event)"
+                                          focus-on="activation">
+                                  <div ng-invalid ng-show="searchRegexError">{{searchRegexError}}</div>
+                            </td>
+                            <td>
+                              <label class="checkbox searchMode"><input type="radio" name="searchMode" value="Default" ng-model="searchMode">
+                                Default
+                              </label>
+                            </td>
+                            <td>
+                              <label class="checkbox searchMode"><input type="radio" name="searchMode" value="Glob" ng-model="searchMode">
+                                Glob
+                              </label>
+                            </td>
+                            <td>
+                              <label class="checkbox searchMode"><input type="radio" name="searchMode" value="Regex" ng-model="searchMode">
+                                Regex
+                              </label>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
                 <td style="width: 100px">
-                        <label style="color: #a1bfc6; font-size: small">Total: {{termList.length}}</label>
+                        <label style="color: #a1bfc6; font-size: small">Total: {{totalTerms}}</label>
                 </td>
 
                 <td style="width: 70px">
@@ -38,7 +61,7 @@
                tr-ng-grid=""
                items="termList"
                selection-mode="None"
-               filter-by="termListFilter"
+               filter-by="termListFilter4grid"
                page-items="pageSize"
                enable-filtering="false"
         >

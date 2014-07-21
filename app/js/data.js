@@ -67,9 +67,9 @@ angular.module('cfsn.data', [])
                         cache.termDict = {};
 
                         cache.termList = _.map(rows, function (e) {
-                            var name           = e[0];
-                            var definition     = e[1];
-                            var canonicalUnits = e[2];
+                            var name           = vutil.cleanQuotes(e[0]);
+                            var definition     = vutil.cleanQuotes(e[1]);
+                            var canonicalUnits = vutil.cleanQuotes(e[2]);
 
                             var termName = vutil.getTermName(name);
 
@@ -115,8 +115,8 @@ angular.module('cfsn.data', [])
 
                         if (rows.length == 1) {
                             var termDetails = {
-                                definition:     rows[0][0],
-                                canonicalUnits: rows[0][1]
+                                definition:     vutil.cleanQuotes(rows[0][0]),
+                                canonicalUnits: vutil.cleanQuotes(rows[0][1])
                             };
                             cache.termDict[termName] = termDetails;
                             fns.gotTermDetails(undefined, termDetails);
