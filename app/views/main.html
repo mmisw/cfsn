@@ -68,7 +68,7 @@
             <thead>
                 <tr>
                     <th field-name="name"            enable-filtering="true"></th>
-                    <th field-name="description"     enable-filtering="true"></th>
+                    <th field-name="definition"      enable-filtering="true"></th>
                     <th field-name="canonicalUnits"  enable-filtering="true" display-name="Units" style="white-space: nowrap;"></th>
                 </tr>
             </thead>
@@ -77,8 +77,8 @@
                 <td field-name="name" style="white-space: nowrap;">
                     <div ng-bind-html="gridItem.name"></div>
                 </td>
-                <td field-name="description">
-                    <div ng-bind-html="gridItem.description"></div>
+                <td field-name="definition">
+                    <div ng-bind-html="gridItem.definition"></div>
                 </td>
                 <td field-name="canonicalUnits">
                     <div ng-bind-html="gridItem.canonicalUnits"></div>

@@ -114,11 +114,6 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
             $scope.$watch('searchMode', function(searchMode) {
                 //console.log("watch searchMode", searchMode);
                 searchSettingsChanged();
-//                if (searchMode === 'Literal') {
-//                    // returning from glob or regex search, so refresh whole term list:
-//                    getTermList($scope, dataService);
-//                }
-//                updateSearchVars();
             });
 
             $scope.$watch('termListFilter', function(newTermListFilter) {
@@ -160,38 +155,42 @@ function getTermList($scope, dataService) {
         return htmlify ? vutil.htmlifyObject(term.canonicalUnits) : _.escape(term.canonicalUnits)
     };
 
-    dataService.getTermList({
-        gotTermList: function(error, termList) {
-            //console.log("gotTermList: ", termList);
+    var filterByRegex = function(termList, regex) {
+        return _.filter(termList, function(term) {
+            var termName = vutil.getTermName(term.name);
+            return regex.test(termName)
+                || regex.test(term.definition)
+                || regex.test(term.canonicalUnits);
+        });
+    };
 
-            $scope.totalTerms = 0;
-            if (error) {
-                $scope.works.remove(workId);
-                $scope.error = error;
-                $scope.errors.add(error);
-                return;
-            }
+    var gotTermList = function(error, termList) {
+        //console.log("gotTermList: ", termList);
 
-            $scope.totalTerms = termList.length;
-
-            if ($scope.searchRegex) {
-                var regex = $scope.searchRegex;
-                termList = _.filter(termList, function(term) {
-                    return regex.test(vutil.getTermName(term.name))
-                        || regex.test(term.definition)
-                        || regex.test(term.canonicalUnits);
-                });
-                //console.log("after applying regex", regex, ": terms=", termList);
-            }
-
-            $scope.termList = _.map(termList, function(term) { // with htmlified or escaped uri's
-                return {
-                    name:           prepareName(term),
-                    description:    prepareDefinition(term),
-                    canonicalUnits: prepareCanonicalUnits(term)
-                };
-            });
+        $scope.totalTerms = 0;
+        if (error) {
             $scope.works.remove(workId);
+            $scope.error = error;
+            $scope.errors.add(error);
+            return;
         }
-    });
+
+        $scope.totalTerms = termList.length;
+
+        if ($scope.searchRegex) {
+            termList = filterByRegex(termList, $scope.searchRegex);
+            console.log("after applying regex", $scope.searchRegex, ": terms=", termList);
+        }
+
+        $scope.termList = _.map(termList, function(term) { // with htmlified or escaped uri's
+            return {
+                name:           prepareName(term),
+                definition:     prepareDefinition(term),
+                canonicalUnits: prepareCanonicalUnits(term)
+            };
+        });
+        $scope.works.remove(workId);
+    };
+
+    dataService.getTermList({gotTermList: gotTermList});
 }

@@ -43,7 +43,7 @@ function getTermDetails($scope, dataService) {
                 $scope.externalLink = cfsnConfig.snPrefix + $scope.termName;
                 $scope.termDetails = {
                     found:          true,
-                    description:    processContent(termDetails.definition),
+                    definition:     processContent(termDetails.definition),
                     canonicalUnits: processContent(termDetails.canonicalUnits),
                     orrUri:        '<a href="' +$scope.externalLink+ '">' + $scope.externalLink + '</a>'
                 };
