@@ -179,7 +179,7 @@ var vutil = (function () {
             }
         }
         regexChars.push("$");
-        return new RegExp(regexChars.join(""));
+        return new RegExp(regexChars.join(""), "im");
     }
 
     return {

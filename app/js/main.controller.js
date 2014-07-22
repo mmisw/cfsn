@@ -83,7 +83,7 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
                 }
                 else if ($scope.searchMode === 'Regex') {
                     try {
-                        $scope.searchRegex = new RegExp(searchText, 'gim');
+                        $scope.searchRegex = new RegExp(searchText, 'im');
                     }
                     catch (e) {
                         $scope.searchRegexError = e.message;
