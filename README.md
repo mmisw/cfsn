@@ -3,9 +3,9 @@ cfsn
 
 A CF Standard Names Vocabulary browser -- prototype
 
-Currently deployed at http://mmisw.org/experimental/cfsn
+Deployment available at http://mmisw.org/cfsn
 
-See the wiki for documentation.
+See the [wiki](https://github.com/mmisw/cfsn/wiki) for documentation.
 
 
 ### Trying cfsn locally:
