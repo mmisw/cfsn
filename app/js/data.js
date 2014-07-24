@@ -120,12 +120,14 @@ angular.module('cfsn.data', [])
                             };
                             cache.termDict[termName] = termDetails;
                             fns.gotTermDetails(undefined, termDetails);
-                            return;
                         }
-                        if (rows.length > 1) {
+                        else if (rows.length == 0) {
+                            fns.gotTermDetails();  // not found
+                        }
+                        else {
+                            // should not happen.
                             console.log("WARN: unexpected number of results: ", rows.length);
                         }
-                        fns.gotTermDetails("WARN: unexpected number of results: ", rows.length);
                     })
                     .error(httpErrorHandler(fns.gotTermDetails));
             }
