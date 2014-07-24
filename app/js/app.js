@@ -8,10 +8,11 @@ angular.module('cfsn', [
         'cfsn.data',
         'cfsn.filters',
         'cfsn.main.controller',
-        'cfsn.term.controller'
+        'cfsn.term.controller',
+        'cfsn.flat.controller'
     ])
 
-    .value('version', '0.1.0')
+    .value('version', '0.1.1')
 
     .directive('appVersion', ['version', function(version) {
         return function(scope, elm, attrs) {
@@ -21,6 +22,10 @@ angular.module('cfsn', [
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
+            .when('/_flat', {
+                templateUrl: 'views/flat.html',
+                controller: 'FlatCtrl'})
+
             .when('/', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'})

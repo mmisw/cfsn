@@ -182,3 +182,24 @@ label.searchMode {
     color: #a1bfc6;
     font-size: small;
 }
+
+table.flat {
+    width: 100%;
+    font-size: small;
+    border-spacing: 20px;
+    border: 1px solid #8cacbb;
+}
+table.flat th {
+    padding: 5px;
+    border: 1px solid #8cacbb;
+    background-color: #f3fcff;
+}
+table.flat td {
+    padding: 5px;
+    border: 1px solid #8cacbb;
+}
+table.flat tr {
+    border-spacing: 20px;
+    border: 1px solid #8cacbb;
+    margin: 30px !important;
+}
