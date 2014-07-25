@@ -11,7 +11,7 @@ angular.module('cfsn.data', [])
             var canonicalUnits = '<' + cfsnConfig.predicates.canonicalUnits + '>';
 
             function logQuery(query) {
-                console.log("making query: " + query);
+                //console.log("making query: " + query);
             }
 
             /*

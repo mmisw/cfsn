@@ -178,10 +178,10 @@ input.invalid {
 }
 
 label.searchMode {
-    padding-left: 0;
     padding-left: 2px;
-    color: #a1bfc6;
+    color: #8aa8af;
     font-size: small;
+    font-weight: inherit;
 }
 
 table.flat {
