@@ -6,8 +6,8 @@
         <table class="mynav">
             <thead>
 
-            <th>
-                <td>
+            <tr>
+                <th>
                     <table>
                         <tr>
                             <td style="width: 21px">
@@ -37,24 +37,24 @@
                             </td>
                         </tr>
                     </table>
-                </td>
-                <td style="width: 100px">
+                </th>
+                <th style="width: 100px">
                         <label style="color: #a1bfc6; font-size: small">Total: {{totalTerms}}</label>
-                </td>
+                </th>
 
-                <td style="width: 70px">
+                <th style="width: 70px">
                         <label style="color: #a1bfc6; font-size: small" for="pageSizeEnter">Page size:</label>
-                </td>
-                <td style="width: 50px">
+                </th>
+                <th style="width: 50px">
                     <input id="pageSizeEnter" type="text" class="form-control ng-valid pageSize"
                           ng-model="pageSizeEnter" ng-keypress="pageSizeKeyPressed($event)">
-                </td>
+                </th>
 
-                <td style="width: 100px">
+                <th style="width: 100px">
                     <button type="submit" class="btn btn-default btn-xs" ng-click="showAll()">Show all</button>
-                </td>
+                </th>
 
-            </th>
+            </tr>
             </thead>
         </table>
 
