@@ -204,3 +204,18 @@ table.flat tr {
     border: 1px solid #8cacbb;
     margin: 30px !important;
 }
+
+label.category {
+    padding-left: 2px;
+    padding-right: 8px;
+    color: #5c7077;
+    /*font-size: small;*/
+    font-weight: inherit;
+}
+
+.counter {
+    width: 21px;
+    color: #5c7077;
+    text-align: right;
+    font-size: small;
+}
