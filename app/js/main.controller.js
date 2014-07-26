@@ -47,42 +47,50 @@ angular.module('cfsn.main.controller', ['trNgGrid'])
 ;
 
 function parseRouteParams($scope, $routeParams) {
-    $scope.searchMode = 'Literal';
+    $scope.searchMode = undefined;
     $scope.searchRegex = undefined;
     $scope.termListFilter = "";
 
     var search = $routeParams.search;
     if (!search || search.length == 0) {
+        $scope.searchMode = 'Literal';
         return;
     }
+    //console.log("parseRouteParams: search: [" + search + "]");
 
-    if (search[0] !== '!') {
-        $scope.termListFilter = search;
-        return;
-    }
+    // '<_EXCL_>': a mark (arbitrary but unlikely to be entered by user)
+    // to save any explicit !s (which are escaped as ~!)
+    search = search.replace(/\~!/g, '<_EXCL_>');
     var parts = search.split('!');
-    parts.shift(); // skip first empty element
+    var firstPart = parts.shift().trim();
+    if (firstPart.length > 0) {
+        $scope.searchMode = 'Literal';
+        $scope.termListFilter = firstPart.replace(/<_EXCL_>/g, '!');
+    }
 
     _.each(parts, function(part) {
         var q = part.match(/(c|g|r)\/(.*)/);
         if (q) {
             var key = q[1];
-            var arg = q[2];
+            var arg = q[2].replace(/<_EXCL_>/g, '!');
             if (key == 'c') {
                 var e = _.find($scope.selCategories, {label: arg});
                 if (e) {
                     e.selected = true;
                 }
             }
-            else {
+            else if ($scope.searchMode === undefined) {
                 $scope.searchMode = key == 'g' ? 'Glob' : 'Regex';
                 $scope.termListFilter = arg;
             }
         }
         else {
-            console.log("warning: part ignored:", part);
+            console.log("warning: part ignored: [" + part + "]");
         }
     });
+    if ($scope.searchMode === undefined) {
+        $scope.searchMode = 'Literal';
+    }
 }
 
 function updateSearchVars($scope) {
@@ -156,34 +164,39 @@ function searchSettingsChanged($scope, $location) {
 
     var parts4location = [];
 
-    // capture selected categories:
-    _.each($scope.selCategories, function(cat) {
-        if (cat.selected) {
-            parts4location.push("c/" + cat.label);
-        }
-    });
-
     // capture global search:
     var searchText = $scope.termListFilter.trim();
-    searchText = searchText.replace("?", "%3F");
+    searchText = searchText.replace(/\?/g, "%3F");
+    searchText = searchText.replace(/!/g, "~!"); // escape ! because we use it with special meaning.
+    //console.log("searchSettingsChanged: searchText: [" + searchText + "]");
+
     if ($scope.searchMode === 'Literal') {
         if (searchText.length > 0) {
-            parts4location.push("/" + searchText);
+            parts4location.push(searchText);
         }
     }
     else if ($scope.searchMode === 'Glob') {
-        parts4location.push("g/" + searchText);
+        parts4location.push("!g/" + searchText);
     }
     else if ($scope.searchMode === 'Regex') {
-        parts4location.push("r/" + searchText);
+        parts4location.push("!r/" + searchText);
     }
+
+    // capture selected categories:
+    _.each($scope.selCategories, function(cat) {
+        if (cat.selected) {
+            parts4location.push("!c/" + cat.label);
+        }
+    });
+
     //console.log("searchSettingsChanged: parts4location", parts4location);
 
     if (parts4location.length == 0) {
         $location.url("/");
     }
     else {
-        var url = "/search/!" + parts4location.join('!');
+        var url = "/search/" + parts4location.join('');
+        //console.log("location.url=", url);
         $location.url(url);
     }
 }
