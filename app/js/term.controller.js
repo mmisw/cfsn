@@ -1,5 +1,7 @@
 'use strict';
 
+(function() {
+
 angular.module('cfsn.term.controller', ['trNgGrid'])
 
     .controller('TermCtrl', ['$scope', '$routeParams', 'dataService', 'Works',
@@ -70,3 +72,5 @@ function getTermDetails($scope, dataService) {
         }
     });
 }
+
+})();
