@@ -5,13 +5,11 @@ angular.module('cfsn.data', [])
     .factory('dataService', ['$http',
         function($http) {
 
-            var rdfType = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
-            var snClass = '<' + cfsnConfig.snClass + '>';
             var definition = '<' + cfsnConfig.predicates.definition + '>';
             var canonicalUnits = '<' + cfsnConfig.predicates.canonicalUnits + '>';
 
             function logQuery(query) {
-                //console.log("making query: " + query);
+                console.log("making query: " + query);
             }
 
             /*
@@ -48,13 +46,7 @@ angular.module('cfsn.data', [])
                     return;
                 }
 
-                var query = 'select distinct ?name ?definition ?canonicalUnits where {\n' +
-                    '  ?name ' +rdfType+ ' ' + snClass + '.\n' +
-                    '  ?name ' +definition+ ' ?definition.\n' +
-                    '  ?name ' +canonicalUnits+ ' ?canonicalUnits.\n' +
-                    '}\n' +
-                    'order by ?name';
-
+                var query = cfsnConfig.termListQuery;
                 logQuery(query);
 
                 $http.get(cfsnConfig.sparqlEndpoint, {params: {query: query}})
@@ -68,8 +60,8 @@ angular.module('cfsn.data', [])
 
                         cache.termList = _.map(rows, function (e) {
                             var name           = vutil.cleanQuotes(e[0]);
-                            var definition     = vutil.cleanQuotes(e[1]);
-                            var canonicalUnits = vutil.cleanQuotes(e[2]);
+                            var definition     = e[1] ? vutil.cleanQuotes(e[1]) : "";
+                            var canonicalUnits = e[2] ? vutil.cleanQuotes(e[2]) : "";
 
                             var termName = vutil.getTermName(name);
 

@@ -106,6 +106,8 @@ var vutil = (function () {
             value = vutil.mklinks4uri(value, true);
         }
         else {
+            // the following commented out until there's time to implement it properly
+/*
             // string with language tag?
             var m = value.match(/^("[^"]+")(@[A-Za-z\-]+)$/);
             if (m) {
@@ -115,6 +117,8 @@ var vutil = (function () {
             else {
                 value = vutil.mklinks4text(value);
             }
+*/
+            value = vutil.mklinks4text(value);
 
             value = value.replace(stdNameRegex, mklinks4stdName);
         }
