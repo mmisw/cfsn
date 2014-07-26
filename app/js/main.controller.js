@@ -201,7 +201,7 @@ function searchSettingsChanged($scope, $location) {
     }
 }
 
-function filterByRegex(termList, regex) {
+function filterByRegex(termList, regex, onlyOnTermName) {
     if (!regex || regex.length == 0) {
         return termList;
     }
@@ -209,8 +209,7 @@ function filterByRegex(termList, regex) {
     termList = _.filter(termList, function(term) {
         var termName = vutil.getTermName(term.name);
         return regex.test(termName)
-            || regex.test(term.definition)
-            || regex.test(term.canonicalUnits);
+            || !onlyOnTermName && (regex.test(term.definition) || regex.test(term.canonicalUnits));
     });
     console.log("after applying regex", regex, termList.length);
     return termList;
@@ -236,13 +235,13 @@ function applyFilters($scope, termList) {
         else {
             regex = _.map(allParts, function(part) { return '(' + part + ')' }).join('|');
         }
-        termList = filterByRegex(termList, new RegExp(regex, 'im'));
+        termList = filterByRegex(termList, new RegExp(regex, 'im'), true);
         $scope.numberAfterCategories = termList.length;
     }
 
     // now, by global field:
     $scope.numberAfterGlobalFilter = termList.length;
-    termList = filterByRegex(termList, $scope.searchRegex);
+    termList = filterByRegex(termList, $scope.searchRegex, false);
     $scope.numberAfterGlobalFilter = termList.length;
     return termList;
 }
