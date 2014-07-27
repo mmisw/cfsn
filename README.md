@@ -12,18 +12,20 @@ See the [wiki](https://github.com/mmisw/cfsn/wiki) for documentation.
 
 Clone the repo `git clone https://github.com/mmisw/cfsn.git` and then open
 `app/index.html` in your browser. To avoid potential issues caused by some
-browsers when opening a regular local file, you can make the `app/`
-subdirectory accessible from your web server. Alternatively, if you have
+browsers when opening a local web application, you can make the `app/`
+subdirectory accessible from your web server. If you have
 [nodejs](http://nodejs.org/) installed, you can simply run:
 ```
 $ node scripts/web-server.js
 ```
-and then open http://localhost:8000/app/index.html
+and then open [http://localhost:8000/app/index.html](http://localhost:8000/app/index.html)
 
 
 ### Noteworthy changes
 
-- 0.1.1 - filtering by category as [here](http://cfconventions.org/Data/cf-standard-names/27/build/cf-standard-name-table.html)
+- 0.1.2: general info retrieved from endpoint.
+
+- 0.1.1: filtering by category as [here](http://cfconventions.org/Data/cf-standard-names/27/build/cf-standard-name-table.html)
 but allowing multiple selection and applied as a first filter.
 
 - 0.1.0: global search modes: glob and regex.

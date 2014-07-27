@@ -4,6 +4,16 @@ var cfsnConfig = {
         sparqlEndpoint: 'http://mmisw.org/sparql',
         snPrefix:       'http://mmisw.org/ont/cf/parameter/',
 
+        generalInfoQuery:
+            "prefix omvmmi: <http://mmisw.org/ont/mmi/20081020/ontologyMetadata/>\n" +
+            "prefix omv: <http://omv.ontoware.org/2005/05/ontology#>\n" +
+            "select distinct ?version_number ?last_modified ?version\n" +
+            "where {\n" +
+            "  OPTIONAL { <http://mmisw.org/ont/cf/parameter> omvmmi:origVocVersionId      ?version_number }\n" +
+            "  OPTIONAL { <http://mmisw.org/ont/cf/parameter> omvmmi:origVocLastModified   ?last_modified }\n" +
+            "  OPTIONAL { <http://mmisw.org/ont/cf/parameter> omv:version                  ?version}\n" +
+            "}",
+
         termListQuery:
             "prefix cfsn: <http://mmisw.org/ont/cf/parameter/>\n" +
             "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +

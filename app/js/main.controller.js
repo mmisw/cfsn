@@ -4,6 +4,10 @@
 
 angular.module('cfsn.main.controller', ['trNgGrid'])
 
+.run(['$rootScope', 'dataService', 'Works', function($rootScope, dataService,  Works) {
+        getGeneralInfo($rootScope, dataService);
+    }])
+
 .controller('MainCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'dataService', 'Works', 'focus',
     function ($scope, $routeParams, $location, $timeout, dataService, Works, focus) {
 
@@ -309,6 +313,21 @@ function getTermList($scope, dataService, then) {
     };
 
     dataService.getTermList({gotTermList: gotTermList});
+}
+
+function getGeneralInfo($scope, dataService) {
+    var workId = $scope.works.add("getting general info");
+    var gotGeneralInfo = function(error, generalInfo) {
+        //console.log("gotGeneralInfo: ", generalInfo);
+        $scope.works.remove(workId);
+        if (error) {
+            $scope.error = error;
+            $scope.errors.add(error);
+            return;
+        }
+        $scope.generalInfo = generalInfo;
+    };
+    dataService.getGeneralInfo({gotGeneralInfo: gotGeneralInfo});
 }
 
 })();

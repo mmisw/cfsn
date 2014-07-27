@@ -27,11 +27,27 @@
         </tr>
     </table>
 
-    <div style="font-size: small; padding-top: 10px">
-        <a href="http://cfconventions.org/documents.html" target="_blank">
-        <!-- Temporary until proper query is in place -->
-        Original vocabulary version_number: 27 (last modified 2013-11-28T05:25:32Z)
-        </a>
+    <div class="generalInfo" ng-show="generalInfo">
+        <table>
+            <tr style="padding: 10px">
+                <td class="generalInfoSect">
+                    <a href="http://cfconventions.org/documents.html" target="_blank"> Original vocabulary </a>
+                    <span ng-show="generalInfo.orr">
+                        version_number: {{generalInfo.orr.version_number}} last modified: {{generalInfo.orr.last_modified}}
+                    </span>
+                </td>
+                <td class="generalInfoSect">
+                    <a href="http://mmisw.org/ont/cf/parameter" target="_blank"> ORR ontology </a>
+                    <span ng-show="generalInfo.orr">
+                        version: {{generalInfo.orr.version}}
+                    </span>
+                </td>
+                <td class="generalInfoSect">
+                    <a href="http://vocab.nerc.ac.uk/collection/P07/" target="_blank"> NVS ontology </a>
+                    <span ng-show="generalInfo.nvs">version: {{generalInfo.nvs.version}}</span>
+                </td>
+            </tr>
+        </table>
     </div>
 
 

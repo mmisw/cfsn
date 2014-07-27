@@ -219,3 +219,15 @@ label.category {
     text-align: right;
     font-size: small;
 }
+
+div.generalInfo {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: small;
+}
+
+td.generalInfoSect {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #8cacbb;
+}
