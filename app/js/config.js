@@ -1,29 +1,35 @@
 var cfsnConfig = {
 
-    sparqlEndpoint: 'http://mmisw.org/sparql',
+    orr: {
+        sparqlEndpoint: 'http://mmisw.org/sparql',
+        snPrefix:       'http://mmisw.org/ont/cf/parameter/',
 
-    snPrefix:       'http://mmisw.org/ont/cf/parameter/',
-
-    predicates: {
-        definition:      'http://www.w3.org/2004/02/skos/core#definition',
-        canonicalUnits:  'http://mmisw.org/ont/cf/parameter/canonical_units'
-    },
-
-    termListQuery:
+        termListQuery:
             "prefix cfsn: <http://mmisw.org/ont/cf/parameter/>\n" +
             "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
             "select distinct ?name ?definition ?canonicalUnits\n" +
             "where {\n" +
-            //'  ?name a cfsn:Standard_Name.\n' +  <- subsumed by next condition
-            '  cfsn:parameter skos:narrower ?name.\n' +
+            //"  ?name a cfsn:Standard_Name.\n" +  <- subsumed by next condition
+            "  cfsn:parameter skos:narrower ?name.\n" +
             "  OPTIONAL { ?name skos:definition      ?definition }\n" +
             "  OPTIONAL { ?name cfsn:canonical_units ?canonicalUnits }\n" +
             "} order by ?name",
 
+        termQueryTemplate:
+            "prefix cfsn: <http://mmisw.org/ont/cf/parameter/>\n" +
+            "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+            "select distinct ?definition ?canonicalUnits where {\n" +
+            "  cfsn:parameter skos:narrower {{name}}.\n" +
+            "  OPTIONAL { {{name}} skos:definition      ?definition }\n" +
+            "  OPTIONAL { {{name}} cfsn:canonical_units ?canonicalUnits }\n" +
+            "}"
+    },
+
     nerc: {
         sparqlEndpoint: 'http://vocab.nerc.ac.uk/sparql/sparql',
         uriQueryTemplate:
-            'select distinct ?uri {?uri <http://www.w3.org/2004/02/skos/core#prefLabel> "{{stdname}}"@en .}'
+            "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+            'select distinct ?uri {?uri skos:prefLabel "{{stdname}}"@en .}'
     },
 
     // according to http://cfconventions.org/Data/cf-standard-names/27/build/cf-standard-name-table.html as of 2014-07-25

@@ -42,7 +42,7 @@ function getTermDetails($scope, dataService) {
             }
 
             if (termDetails) {
-                $scope.externalLink = cfsnConfig.snPrefix + $scope.termName;
+                $scope.externalLink = cfsnConfig.orr.snPrefix + $scope.termName;
                 $scope.termDetails = {
                     found:          true,
                     definition:     processContent(termDetails.definition),

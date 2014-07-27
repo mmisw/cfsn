@@ -146,8 +146,8 @@ var vutil = (function () {
     // removes the prefix
     function getTermName(name) {
         var termName = name.replace(/^<(.*)>$/, '$1');
-        if (termName.indexOf(cfsnConfig.snPrefix) == 0) {
-            termName = termName.substring(cfsnConfig.snPrefix.length);
+        if (termName.indexOf(cfsnConfig.orr.snPrefix) == 0) {
+            termName = termName.substring(cfsnConfig.orr.snPrefix.length);
         }
         return termName;
     }

@@ -5,9 +5,6 @@ angular.module('cfsn.data', [])
     .factory('dataService', ['$http',
         function($http) {
 
-            var definition = '<' + cfsnConfig.predicates.definition + '>';
-            var canonicalUnits = '<' + cfsnConfig.predicates.canonicalUnits + '>';
-
             function logQuery(query) {
                 console.log("making query: " + query);
             }
@@ -46,10 +43,10 @@ angular.module('cfsn.data', [])
                     return;
                 }
 
-                var query = cfsnConfig.termListQuery;
+                var query = cfsnConfig.orr.termListQuery;
                 logQuery(query);
 
-                $http.get(cfsnConfig.sparqlEndpoint, {params: {query: query}})
+                $http.get(cfsnConfig.orr.sparqlEndpoint, {params: {query: query}})
                     .success(function (data, status, headers, config) {
                         //console.log("getTermList: data= ", data);
 
@@ -91,24 +88,23 @@ angular.module('cfsn.data', [])
                     return;
                 }
 
-                var termUri = '<' + cfsnConfig.snPrefix + termName + '>';
-                var query = 'select distinct ?definition ?canonicalUnits where {\n' +
-                    '  ' +termUri+ ' ' +definition+ ' ?definition.\n' +
-                    '  ' +termUri+ ' ' +canonicalUnits+ ' ?canonicalUnits.\n' +
-                    '}';
+                var termUri = '<' + cfsnConfig.orr.snPrefix + termName + '>';
+                var query = cfsnConfig.orr.termQueryTemplate.replace(/{{name}}/g, termUri);
 
                 logQuery(query);
 
-                $http.get(cfsnConfig.sparqlEndpoint, {params: {query: query}})
+                $http.get(cfsnConfig.orr.sparqlEndpoint, {params: {query: query}})
                     .success(function (data, status, headers, config) {
-                        //console.log("getTermDetails: data= ", data);
+                        console.log("getTermDetails: data= ", data);
                         //var names = data.names;
                         var rows = data.values;
 
                         if (rows.length == 1) {
+                            var definition = rows[0][0];
+                            var canonicalUnits = rows[0][1];
                             var termDetails = {
-                                definition:     vutil.cleanQuotes(rows[0][0]),
-                                canonicalUnits: vutil.cleanQuotes(rows[0][1])
+                                definition:     definition ? vutil.cleanQuotes(definition) : "",
+                                canonicalUnits: canonicalUnits ? vutil.cleanQuotes(canonicalUnits) : ""
                             };
                             cache.termDict[termName] = termDetails;
                             fns.gotTermDetails(undefined, termDetails);
@@ -133,7 +129,7 @@ angular.module('cfsn.data', [])
                     return;
                 }
 
-                var query = cfsnConfig.nerc.uriQueryTemplate.replace('{{stdname}}', termName);
+                var query = cfsnConfig.nerc.uriQueryTemplate.replace(/{{stdname}}/g, termName);
                 console.log("making query: " + query + "\nagainst: " +cfsnConfig.nerc.sparqlEndpoint);
 
                 $http.get(cfsnConfig.nerc.sparqlEndpoint, {params: {query: query, output: 'json'}})
