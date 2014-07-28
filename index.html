@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Cfsn by mmisw</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Cfsn</h1>
+        <p>CF Standard Names Vocabulary Browser</p>
+
+        <p class="view"><a href="https://github.com/mmisw/cfsn">View the Project on GitHub <small>mmisw/cfsn</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/mmisw/cfsn/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mmisw/cfsn/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mmisw/cfsn">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="cfsn" class="anchor" href="#cfsn"><span class="octicon octicon-link"></span></a>cfsn</h1>
+
+<p>A CF Standard Names Vocabulary browser -- prototype</p>
+
+<p>Deployment available at <a href="http://mmisw.org/cfsn">http://mmisw.org/cfsn</a></p>
+
+<p>See the <a href="https://github.com/mmisw/cfsn/wiki">wiki</a> for documentation.</p>
+
+<h3>
+<a name="trying-cfsn-locally" class="anchor" href="#trying-cfsn-locally"><span class="octicon octicon-link"></span></a>Trying cfsn locally:</h3>
+
+<p>Clone the repo <code>git clone https://github.com/mmisw/cfsn.git</code> and then open
+<code>app/index.html</code> in your browser. To avoid potential issues caused by some
+browsers when opening a local web application, you can make the <code>app/</code>
+subdirectory accessible from your web server. If you have
+<a href="http://nodejs.org/">nodejs</a> installed, you can simply run:</p>
+
+<pre><code>$ node scripts/web-server.js
+</code></pre>
+
+<p>and then open <a href="http://localhost:8000/app/index.html">http://localhost:8000/app/index.html</a></p>
+
+<h3>
+<a name="noteworthy-changes" class="anchor" href="#noteworthy-changes"><span class="octicon octicon-link"></span></a>Noteworthy changes</h3>
+
+<ul>
+<li><p>0.1.2: general info retrieved from endpoint.</p></li>
+<li><p>0.1.1: filtering by category as <a href="http://cfconventions.org/Data/cf-standard-names/27/build/cf-standard-name-table.html">here</a>
+but allowing multiple selection and applied as a first filter.</p></li>
+<li><p>0.1.0: global search modes: glob and regex.</p></li>
+<li><p>0.0.5: preliminary inclusion of term links against NVS.</p></li>
+<li><p>0.0.3: options: change page size; showAll button.</p></li>
+<li><p>0.0.2: cache; better hyperlinking in descriptions.</p></li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mmisw">mmisw</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
