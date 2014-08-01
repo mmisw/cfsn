@@ -218,6 +218,7 @@ label.category {
     color: #9db6bd;
     text-align: right;
     font-size: small;
+    padding-right: 10pt;
 }
 
 div.generalInfo {
