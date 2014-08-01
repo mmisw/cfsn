@@ -133,6 +133,15 @@ var cfsnConfig = {
                 " { ?object     skos:narrower  {{termUri}} }\n" +
                 "} order by ?object"
         }, {
+            label:          'skos:related',
+            predicate:      'http://www.w3.org/2004/02/skos/core#related',
+            queryTemplate:
+                "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "select distinct ?object where {\n" +
+                " { {{termUri}} skos:related ?object     } UNION \n" +
+                " { ?object     skos:related  {{termUri}} }\n" +
+                "} order by ?object"
+        }, {
             label:          'owl:sameAs',
             predicate:      'http://www.w3.org/2002/07/owl#sameAs',
             queryTemplate:
