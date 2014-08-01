@@ -181,10 +181,10 @@ function getNercTermUri($http, termName, fns) {
         return;
     }
 
-    var query = cfsnConfig.nerc.uriQueryTemplate.replace(/{{stdname}}/g, termName);
-    console.log("making query: " + query + "\nagainst: " +cfsnConfig.nerc.sparqlEndpoint);
+    var query = cfsnConfig.nvs.uriQueryTemplate.replace(/{{stdname}}/g, termName);
+    console.log("making query: " + query + "\nagainst: " +cfsnConfig.nvs.sparqlEndpoint);
 
-    $http.get(cfsnConfig.nerc.sparqlEndpoint, {params: {query: query, output: 'json'}})
+    $http.get(cfsnConfig.nvs.sparqlEndpoint, {params: {query: query, output: 'json'}})
         .success(function (data, status, headers, config) {
             //console.log("getNercTermUri: data= ", data);
             // TODO more appropriate check of the response

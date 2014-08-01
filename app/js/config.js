@@ -1,6 +1,7 @@
 var cfsnConfig = {
 
     orr: {
+        website:        'http://mmisw.org/',
         sparqlEndpoint: 'http://mmisw.org/sparql',
         snPrefix:       'http://mmisw.org/ont/cf/parameter/',
 
@@ -35,7 +36,8 @@ var cfsnConfig = {
             "}"
     },
 
-    nerc: {
+    nvs: {
+        website:        'http://vocab.nerc.ac.uk/',
         sparqlEndpoint: 'http://vocab.nerc.ac.uk/sparql/sparql',
         uriQueryTemplate:
             "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +

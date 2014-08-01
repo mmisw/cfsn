@@ -37,7 +37,8 @@
 
                 <tr>
                     <th style="text-align: center; font-weight: bold; background-color: beige">
-                        MMI ORR</th>
+                        <a target="_blank" ng-href="{{cfsnConfig.orr.website}}">MMI ORR</a>
+                    </th>
                 </tr>
                 <tr>
                     <td style="padding: 20px">
@@ -92,7 +93,8 @@
 
                 <tr>
                     <th style="text-align: center; font-weight: bold; background-color: beige">
-                        NERC NVS</th>
+                        <a target="_blank" ng-href="{{cfsnConfig.nvs.website}}">NERC NVS</a>
+                    </th>
                 </tr>
                 <tr>
                     <td style="padding: 20px">
@@ -114,15 +116,15 @@
                                 <div ng-repeat="pred in mappingPredicates">
                                     <div>
                                         &mdash; {{pred.label}}
-                                        <span ng-hide="mappingResults.nerc[pred.predicate].searching">
-                                            ({{mappingResults.nerc[pred.predicate].length}})
+                                        <span ng-hide="mappingResults.nvs[pred.predicate].searching">
+                                            ({{mappingResults.nvs[pred.predicate].length}})
                                         </span>
-                                        <span ng-show="mappingResults.nerc[pred.predicate].searching"
+                                        <span ng-show="mappingResults.nvs[pred.predicate].searching"
                                                 class="loading">
                                         </span>
                                     </div>
                                     <ul>
-                                        <li ng-repeat="object in mappingResults.nerc[pred.predicate]">
+                                        <li ng-repeat="object in mappingResults.nvs[pred.predicate]">
                                             <div ng-bind-html="object">
                                             </div>
                                         </li>

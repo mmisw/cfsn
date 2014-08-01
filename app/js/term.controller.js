@@ -76,21 +76,23 @@ function getNercTermUri($scope, dataService) {
                 return;
             }
             $scope.nercExternalLink = termUri;
-            getMappings($scope, dataService, termUri, 'nerc');
+            getMappings($scope, dataService, termUri, 'nvs');
         }
     });
 }
 
 function prepareMappings($scope) {
+    $scope.cfsnConfig = cfsnConfig;
+
     $scope.mappingPredicates = cfsnConfig.mapping.predicates;
 
-    $scope.mappingResults = {orr: {}, nerc: {}};
+    $scope.mappingResults = {orr: {}, nvs: {}};
     _.each($scope.mappingPredicates, function(pred) {
         $scope.mappingResults.orr[pred.predicate] = [];
         $scope.mappingResults.orr[pred.predicate].searching = false;
 
-        $scope.mappingResults.nerc[pred.predicate] = [];
-        $scope.mappingResults.nerc[pred.predicate].searching = false;
+        $scope.mappingResults.nvs[pred.predicate] = [];
+        $scope.mappingResults.nvs[pred.predicate].searching = false;
     });
 
 }
