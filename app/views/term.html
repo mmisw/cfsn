@@ -13,7 +13,7 @@
 
         <table class="term">
             <tr>
-                <td style="font-weight: bold">Definition:</td>
+                <td style="font-weight: bold; vertical-align: text-top">Definition:</td>
                 <td ng-bind-html="termDetails.definition"></td>
             </tr>
             <tr>
@@ -43,11 +43,15 @@
                     <td style="padding: 20px">
 
                         <div class="btn-toolbar btn-group-xs">
-                            <span style="font-weight: bold">Term URI</span>
+                            <span style="font-weight: bold">Term URI:</span>
                             <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink}}">{{externalLink}}</a>
-                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=rdf'}}">rdf</a>
-                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=json'}}">json</a>
-                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=n3'}}">n3</a>
+                        </div>
+
+                        <div class="btn-toolbar btn-group-xs">
+                            <span style="font-weight: bold">Formats:</span>
+                            <a style="padding-left: 10px" class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=rdf'}}">rdf</a>
+                            <a style="padding-left: 10px" class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=json'}}">json</a>
+                            <a style="padding-left: 10px" class="fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=n3'}}">n3</a>
                         </div>
 
                         <div style="padding-top: 20px">
@@ -94,9 +98,13 @@
                     <td style="padding: 20px">
 
                         <div class="btn-toolbar btn-group-xs">
-                            <span style="font-weight: bold">Term URI</span>
+                            <span style="font-weight: bold">Term URI:</span>
                             <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{nercExternalLink}}">{{nercExternalLink}}</a>
-                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{nercExternalLink}}">rdf</a>
+                        </div>
+
+                        <div class="btn-toolbar btn-group-xs">
+                            <span style="font-weight: bold">Formats:</span>
+                            <a style="padding-left: 10px" class="fa fa-external-link" target="_blank" ng-href="{{nercExternalLink}}">rdf</a>
                         </div>
 
                         <div style="padding-top: 20px">
