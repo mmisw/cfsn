@@ -14,6 +14,9 @@ angular.module('cfsn.term.controller', ['trNgGrid'])
             //console.log("$scope.termName=", $scope.termName);
 
             $scope.termDetails = {};
+
+            prepareMappings($scope);
+
             getTermDetails($scope, dataService);
         }])
     ;
@@ -33,44 +36,82 @@ function getTermDetails($scope, dataService) {
         gotTermDetails: function(error, termDetails) {
             //console.log("gotTermDetails: ", termDetails);
 
+            $scope.termDetails.searching = false;
             if (error) {
                 $scope.termDetails = {found: false};
-                $scope.termDetails.searching = false;
                 $scope.works.remove(workId);
                 $scope.errors.add(error);
                 return;
             }
 
             if (termDetails) {
-                $scope.externalLink = cfsnConfig.orr.snPrefix + $scope.termName;
+                var termUri = cfsnConfig.orr.snPrefix + $scope.termName;
+                $scope.externalLink = termUri;
                 $scope.termDetails = {
                     found:          true,
                     definition:     processContent(termDetails.definition),
                     canonicalUnits: processContent(termDetails.canonicalUnits),
                     orrUri:        '<a href="' +$scope.externalLink+ '">' + $scope.externalLink + '</a>'
                 };
+                getMappings($scope, dataService, termUri, 'orr');
 
-                dataService.getNercTermUri($scope.termName, {
-                    gotNercTermUri: function(error, uri) {
-                        $scope.termDetails.searching = false;
-                        $scope.works.remove(workId);
-                        if (error) {
-                            $scope.errors.add(error);
-                            return;
-                        }
-                        $scope.nercExternalLink = uri;
-                    }
-                });
+                getNercTermUri($scope, dataService);
             }
             else {
                 $scope.termDetails = {found: false};
             }
 
-            $scope.termDetails.searching = false;
-
             $scope.works.remove(workId);
         }
     });
+}
+
+function getNercTermUri($scope, dataService) {
+    var workId = $scope.works.add("making NVS query");
+    dataService.getNercTermUri($scope.termName, {
+        gotNercTermUri: function(error, termUri) {
+            $scope.works.remove(workId);
+            if (error) {
+                $scope.errors.add(error);
+                return;
+            }
+            $scope.nercExternalLink = termUri;
+            getMappings($scope, dataService, termUri, 'nerc');
+        }
+    });
+}
+
+function prepareMappings($scope) {
+    $scope.mappingPredicates = cfsnConfig.mapping.predicates;
+
+    $scope.mappingResults = {orr: {}, nerc: {}};
+    _.each($scope.mappingPredicates, function(pred) {
+        $scope.mappingResults.orr[pred.predicate] = [];
+        $scope.mappingResults.nerc[pred.predicate] = [];
+    });
+
+}
+
+function getMappings($scope, dataService, termUri, repo) {
+    var sparqlEndpoint = cfsnConfig[repo].sparqlEndpoint;
+    var workId = $scope.works.add("making mapping queries");
+    _.each(cfsnConfig.mapping.predicates, function(pred) {
+        $scope.works.update(workId, "making mapping query for " + pred.label);
+        dataService.getMappings(termUri, pred.queryTemplate, sparqlEndpoint, {
+            gotMappings: function(error, objects) {
+                if (error) {
+                    $scope.errors.add(error);
+                    return;
+                }
+
+                console.log("GOT objects", objects, "for predicate", pred.label);
+                $scope.mappingResults[repo][pred.predicate] = _.map(objects, function(o) {
+                    return vutil.mkExternalLink4Uri(o, true);
+                });
+            }
+        });
+    });
+    $scope.works.remove(workId);
 }
 
 })();

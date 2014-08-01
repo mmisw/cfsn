@@ -70,6 +70,51 @@ var cfsnConfig = {
     }, {
         label:        'Surface',
         searchString: 'surface'
-    }]
+    }],
+
+    mapping: {
+        /*
+         * Note: we do UNIONs below to not necessarily rely on inference
+         * being enabled on the SPARQL endpoint.
+         * (On the ORR at least, inference is not enabled by default.)
+         */
+        predicates: [{
+            label:          'Exact matches',
+            predicate:      'http://www.w3.org/2004/02/skos/core#exactMatch',
+            queryTemplate:
+                "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "select distinct ?object where {\n" +
+                " { {{termUri}} skos:exactMatch ?object     } UNION\n" +
+                " { ?object     skos:exactMatch {{termUri}} } \n" +
+                "} order by ?object"
+        }, {
+            label:          'Broad matches',
+            predicate:      'http://www.w3.org/2004/02/skos/core#broadMatch',
+            queryTemplate:
+                "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "select distinct ?object where {\n" +
+                " { {{termUri}} skos:broadMatch  ?object     } UNION\n" +
+                " { ?object     skos:narrowMatch {{termUri}} }\n" +
+                "} order by ?object"
+        }, {
+            label:          'Narrow matches',
+            predicate:      'http://www.w3.org/2004/02/skos/core#narrowMatch',
+            queryTemplate:
+                "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "select distinct ?object where {\n" +
+                " { {{termUri}} skos:narrowMatch ?object     } UNION \n" +
+                " { ?object     skos:broadMatch  {{termUri}} }\n" +
+                "} order by ?object"
+        }, {
+            label:        'Related matches',
+            predicate:    'http://www.w3.org/2004/02/skos/core#relatedMatch',
+            queryTemplate:
+                "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "select distinct ?object where {\n" +
+                " { {{termUri}} skos:relatedMatch ?object     } UNION \n" +
+                " { ?object     skos:relatedMatch {{termUri}} }\n" +
+                "} order by ?object"
+        }]
+    }
 
 };

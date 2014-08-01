@@ -9,6 +9,9 @@ angular.module('cfsn.data', []).factory('dataService', ['$http', function($http)
         getTermDetails:   function(termName, fns) { getTermDetails($http, termName, fns); },
         getNercTermUri:   function(termName, fns) { getNercTermUri($http, termName, fns); },
 
+        getMappings:   function(termUri, queryTemplate, sparqlEndpoint, fns) {
+                         getMappings($http, termUri, queryTemplate, sparqlEndpoint, fns); },
+
         cachedTermDict:   function() { return cache.termDict; }
     };
 }]);
@@ -193,6 +196,23 @@ function getNercTermUri($http, termName, fns) {
         .error(httpErrorHandler(fns.gotNercTermUri));
 }
 
+function getMappings($http, termUri, queryTemplate, sparqlEndpoint, fns) {
+    // todo: cache.
+
+    termUri = '<' + termUri + '>';
+
+    var query = queryTemplate;
+    query = query.replace(/{{termUri}}/g, termUri);
+    console.log("making query: " + query + "\nagainst: " +sparqlEndpoint);
+
+    $http.get(sparqlEndpoint, {params: {query: query, output: 'json'}})
+        .success(function (data, status, headers, config) {
+            console.log("getMappings: data= ", data);
+            var objects = _.map(data.values, function(a) { return a[0] });
+            fns.gotMappings(undefined, objects);
+        })
+        .error(httpErrorHandler(fns.gotMappings));
+}
 
 
 })();

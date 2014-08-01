@@ -23,6 +23,8 @@ and then open [http://localhost:8000/app/index.html](http://localhost:8000/app/i
 
 ### Noteworthy changes
 
+- 0.1.3: preliminary mappings included.
+
 - 0.1.2: general info retrieved from endpoint.
 
 - 0.1.1: filtering by category as [here](http://cfconventions.org/Data/cf-standard-names/27/build/cf-standard-name-table.html)

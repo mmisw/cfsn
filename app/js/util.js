@@ -143,6 +143,21 @@ var vutil = (function () {
         return link;
     }
 
+    function mkExternalLink4Uri(uri, possibleBrackets) {
+        var pre = "";
+        var post = "";
+        if (possibleBrackets !== undefined && possibleBrackets) {
+            var m = uri.match(/^(<)?([^>]*)(>)?$/);
+            pre  = _.escape(m[1]);
+            uri  = m[2];
+            post = _.escape(m[3]);
+        }
+        var link = '<a class="fa fa-external-link" target="_blank" title="open directly in a new browser window" href="'
+            + uri + '">' + uri + '</a>';
+        return pre + link + post;
+    }
+
+
     // removes the prefix
     function getTermName(name) {
         var termName = name.replace(/^<(.*)>$/, '$1');
@@ -191,6 +206,7 @@ var vutil = (function () {
         htmlifyObject:       htmlifyObject,
         htmlifyUri:          htmlifyUri,
         htmlifyTerm:         htmlifyTerm,
+        mkExternalLink4Uri:  mkExternalLink4Uri,
         getTermName:         getTermName,
         cleanQuotes:         cleanQuotes,
         globToRegex:         globToRegex,
