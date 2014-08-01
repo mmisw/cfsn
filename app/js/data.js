@@ -208,7 +208,18 @@ function getMappings($http, termUri, queryTemplate, sparqlEndpoint, fns) {
     $http.get(sparqlEndpoint, {params: {query: query, output: 'json'}})
         .success(function (data, status, headers, config) {
             console.log("getMappings: data= ", data);
-            var objects = _.map(data.values, function(a) { return a[0] });
+
+            // TODO in general, more generic check/parse of the response.
+
+            var objects;
+            if (data.results && data.results.bindings) {
+                console.log("getMappings: data.results.bindings= ", data.results.bindings);
+                objects = _.map(data.results.bindings, function(a) { return a.object.value });
+            }
+            else {
+                objects = _.map(data.values, function(a) { return a[0] });
+            }
+
             fns.gotMappings(undefined, objects);
         })
         .error(httpErrorHandler(fns.gotMappings));
