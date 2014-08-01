@@ -71,7 +71,7 @@ div.urititle {
     /*background-color: #ecf5fa;*/
 }
 
-div.loading {
+.loading {
     background-image: url(../img/loading.gif);
     background-repeat: no-repeat;
     padding-left: 20px;

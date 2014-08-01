@@ -13,11 +13,11 @@
 
         <table class="term">
             <tr>
-                <td>Definition:</td>
+                <td style="font-weight: bold">Definition:</td>
                 <td ng-bind-html="termDetails.definition"></td>
             </tr>
             <tr>
-                <td>Canonical units:</td>
+                <td style="font-weight: bold; white-space: nowrap;">Canonical units:</td>
                 <td ng-bind-html="termDetails.canonicalUnits"></td>
             </tr>
         </table>
@@ -25,89 +25,110 @@
     </div>
 
 
-    <div style="margin-left: 30px">
+    <div style="margin-left: 30px; padding-top: 12px">
 
-        <h4>Links:</h4>
+        <h4>Links and mappings in semantic repositories:</h4>
 
-        <table class="links2">
+        <!--  TODO factor out common stuff -->
 
-            <tr>
-                <th style="text-align: center; font-weight: bold; background-color: beige">
-                    MMI ORR</th>
-            </tr>
-            <tr>
-                <td style="padding: 20px">
+        <div style="display: inline-block; vertical-align: top">
 
-                    <div class="btn-toolbar btn-group-xs">
-                        <span style="font-weight: bold">Term URI</span>
-                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink}}">{{externalLink}}</a>
-                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=rdf'}}">rdf</a>
-                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=json'}}">json</a>
-                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=n3'}}">n3</a>
-                    </div>
+            <table class="links2">
 
-                    <div style="padding-top: 20px">
-                        <span style="font-weight: bold">Mappings:</span>
+                <tr>
+                    <th style="text-align: center; font-weight: bold; background-color: beige">
+                        MMI ORR</th>
+                </tr>
+                <tr>
+                    <td style="padding: 20px">
 
-                        <div style="margin-left: 10px">
-                            <div ng-repeat="pred in mappingPredicates">
-                                <div>
-                                    {{pred.label}} ({{mappingResults.orr[pred.predicate].length}})
-                                </div>
-                                <ul>
-                                    <li ng-repeat="object in mappingResults.orr[pred.predicate]">
-                                        <div ng-bind-html="object">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="btn-toolbar btn-group-xs">
+                            <span style="font-weight: bold">Term URI</span>
+                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink}}">{{externalLink}}</a>
+                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=rdf'}}">rdf</a>
+                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=json'}}">json</a>
+                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{externalLink + '?form=n3'}}">n3</a>
                         </div>
 
-                    </div>
+                        <div style="padding-top: 20px">
+                            <div style="font-weight: bold; padding-bottom: 12px">Mappings:</div>
 
-                </td>
-            </tr>
-        </table>
-
-        <br/>
-
-        <table class="links2" ng-show="nercExternalLink">
-
-            <tr>
-                <th style="text-align: center; font-weight: bold; background-color: beige">
-                    NERC NVS</th>
-            </tr>
-            <tr>
-                <td style="padding: 20px">
-
-                    <div class="btn-toolbar btn-group-xs">
-                        <span style="font-weight: bold">Term URI</span>
-                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{nercExternalLink}}">{{nercExternalLink}}</a>
-                        <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{nercExternalLink}}">rdf</a>
-                    </div>
-
-                    <div style="padding-top: 20px">
-                        <span style="font-weight: bold">Mappings:</span>
-
-                        <div style="margin-left: 10px">
-                            <div ng-repeat="pred in mappingPredicates">
-                                <div>
-                                    {{pred.label}} ({{mappingResults.nerc[pred.predicate].length}})
+                            <div style="margin-left: 10px">
+                                <div ng-repeat="pred in mappingPredicates">
+                                    <div>
+                                        &mdash; {{pred.label}}
+                                        <span ng-hide="mappingResults.orr[pred.predicate].searching">
+                                            ({{mappingResults.orr[pred.predicate].length}})
+                                        </span>
+                                        <span ng-show="mappingResults.orr[pred.predicate].searching"
+                                                class="loading">
+                                        </span>
+                                    </div>
+                                    <ul>
+                                        <li ng-repeat="object in mappingResults.orr[pred.predicate]">
+                                            <div ng-bind-html="object">
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <ul>
-                                    <li ng-repeat="object in mappingResults.nerc[pred.predicate]">
-                                        <div ng-bind-html="object">
-                                        </div>
-                                    </li>
-                                </ul>
                             </div>
+
                         </div>
 
-                    </div>
+                    </td>
+                </tr>
+            </table>
 
-                </td>
-            </tr>
-        </table>
+        </div>
+
+
+        <div style="display: inline-block; vertical-align: top">
+
+            <table class="links2" ng-show="nercExternalLink">
+
+                <tr>
+                    <th style="text-align: center; font-weight: bold; background-color: beige">
+                        NERC NVS</th>
+                </tr>
+                <tr>
+                    <td style="padding: 20px">
+
+                        <div class="btn-toolbar btn-group-xs">
+                            <span style="font-weight: bold">Term URI</span>
+                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{nercExternalLink}}">{{nercExternalLink}}</a>
+                            <a class="btn btn-default fa fa-external-link" target="_blank" ng-href="{{nercExternalLink}}">rdf</a>
+                        </div>
+
+                        <div style="padding-top: 20px">
+                            <div style="font-weight: bold; padding-bottom: 12px">Mappings:</div>
+
+                            <div style="margin-left: 10px">
+                                <div ng-repeat="pred in mappingPredicates">
+                                    <div>
+                                        &mdash; {{pred.label}}
+                                        <span ng-hide="mappingResults.nerc[pred.predicate].searching">
+                                            ({{mappingResults.nerc[pred.predicate].length}})
+                                        </span>
+                                        <span ng-show="mappingResults.nerc[pred.predicate].searching"
+                                                class="loading">
+                                        </span>
+                                    </div>
+                                    <ul>
+                                        <li ng-repeat="object in mappingResults.nerc[pred.predicate]">
+                                            <div ng-bind-html="object">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
 
     </div>
 

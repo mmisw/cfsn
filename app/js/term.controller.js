@@ -87,7 +87,10 @@ function prepareMappings($scope) {
     $scope.mappingResults = {orr: {}, nerc: {}};
     _.each($scope.mappingPredicates, function(pred) {
         $scope.mappingResults.orr[pred.predicate] = [];
+        $scope.mappingResults.orr[pred.predicate].searching = false;
+
         $scope.mappingResults.nerc[pred.predicate] = [];
+        $scope.mappingResults.nerc[pred.predicate].searching = false;
     });
 
 }
@@ -97,8 +100,10 @@ function getMappings($scope, dataService, termUri, repo) {
     var workId = $scope.works.add("making mapping queries");
     _.each(cfsnConfig.mapping.predicates, function(pred) {
         $scope.works.update(workId, "making mapping query for " + pred.label);
+        $scope.mappingResults[repo][pred.predicate].searching = true;
         dataService.getMappings(termUri, pred.queryTemplate, sparqlEndpoint, {
             gotMappings: function(error, objects) {
+                $scope.mappingResults[repo][pred.predicate].searching = false;
                 if (error) {
                     $scope.errors.add(error);
                     return;
