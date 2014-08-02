@@ -197,15 +197,13 @@ function getNercTermUri($http, termName, fns) {
 }
 
 function getMappings($http, termUri, queryTemplate, sparqlEndpoint, fns) {
-    // todo: cache.
-
     termUri = '<' + termUri + '>';
 
     var query = queryTemplate;
     query = query.replace(/{{termUri}}/g, termUri);
     console.log("making query: " + query + "\nagainst: " +sparqlEndpoint);
 
-    $http.get(sparqlEndpoint, {params: {query: query, output: 'json'}})
+    $http.get(sparqlEndpoint, {params: {query: query, output: 'json'}, cache: true})
         .success(function (data, status, headers, config) {
             console.log("getMappings: data= ", data);
 
