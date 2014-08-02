@@ -1,27 +1,23 @@
 <div ng-show="termDetails.found">
 
-    <table>
-        <tr style="vertical-align: baseline">
-            <td>
-                <h3>{{termName}}</h3>
-            </td>
-        </tr>
-    </table>
+    <div style="margin-left: 30px; padding-top: 12px">
 
+        <div class="panel panel-default" style="border: 1px solid #8cacbb;">
+          <div class="panel-heading" style="background-color: #ffffff;">
+              <h4>{{termName}}</h4>
+          </div>
 
-    <div style="margin-left: 30px">
-
-        <table class="term">
-            <tr>
-                <td style="font-weight: bold; vertical-align: text-top">Definition:</td>
-                <td ng-bind-html="termDetails.definition"></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold; white-space: nowrap;">Canonical units:</td>
-                <td ng-bind-html="termDetails.canonicalUnits"></td>
-            </tr>
-        </table>
-
+            <table class="term">
+                <tr>
+                    <td style="font-weight: bold; vertical-align: text-top">Definition:</td>
+                    <td ng-bind-html="termDetails.definition"></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; white-space: nowrap;">Canonical units:</td>
+                    <td ng-bind-html="termDetails.canonicalUnits"></td>
+                </tr>
+            </table>
+        </div>
     </div>
 
 

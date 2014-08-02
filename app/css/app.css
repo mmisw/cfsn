@@ -86,16 +86,16 @@ table.term {
     background-color: #ffffff;
     border-spacing: 0px;
     border-collapse: collapse;
-    border: 1px solid #8cacbb;
+    /*border: 1px solid #8cacbb;*/
 }
 table.term th {
     padding: 8px;
-    border: 1px solid #8cacbb;
+    /*border: 1px solid #8cacbb;*/
     background-color: #dee7ec;
 }
 table.term td {
   padding: 8px;
-  border: 1px solid #8cacbb;
+  /*border: 1px solid #8cacbb;*/
 }
 
 
