@@ -10,15 +10,20 @@ See the [wiki](https://github.com/mmisw/cfsn/wiki) for documentation.
 
 ### Trying cfsn locally:
 
-Clone the repo `git clone https://github.com/mmisw/cfsn.git` and then open
-`app/index.html` in your browser. To avoid potential issues caused by some
-browsers when opening a local web application, you can make the `app/`
-subdirectory accessible from your web server. If you have
-[nodejs](http://nodejs.org/) installed, you can simply run:
+1. Clone the repo `git clone https://github.com/mmisw/cfsn.git`
+1. Make the `app/` directory accessible from your web server
+1. Open the index file in your browser
+
+Typically you will want or need a local web server for the step 2
+above. If you have [nodejs](http://nodejs.org/) installed on your system,
+you can do the following:
+```shell
+$ npm install http-server -g
+$ http-server
+Starting up http-server, serving ./ on port: 8080
+Hit CTRL-C to stop the server
 ```
-$ node scripts/web-server.js
-```
-and then open [http://localhost:8000/app/index.html](http://localhost:8000/app/index.html)
+and then open [http://localhost:8080/app/](http://localhost:8080/app/)
 
 
 ### Noteworthy changes
