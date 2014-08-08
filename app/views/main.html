@@ -101,10 +101,10 @@
 
             <tr>
                 <td field-name="name">
-                    <div ng-bind-html="gridItem.name"></div>
+                    <div ng-bind-html="gridItem.name | htmlifyTerm:termListFilter"></div>
                 </td>
                 <td field-name="definition">
-                    <div ng-bind-html="gridItem.definition"></div>
+                    <div ng-bind-html="gridItem.definition | htmlifyDefinition:termListFilter"></div>
                 </td>
                 <td field-name="canonicalUnits" style="white-space: nowrap;">
                     <div ng-bind-html="gridItem.canonicalUnits"></div>

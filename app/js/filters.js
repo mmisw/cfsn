@@ -1,6 +1,6 @@
 'use strict';
 
-/* Filters */
+(function() {
 
 angular.module('cfsn.filters', [])
   .filter('interpolate', ['version', function(version) {
@@ -14,4 +14,28 @@ angular.module('cfsn.filters', [])
       return vutil.mklinks4text(text);
     }
   }])
+
+  .filter('htmlifyTerm', [function() {
+    return function(term, search) {
+      var name = term.name;
+      var termName = vutil.getTermName(name);
+      var text = termName;
+      //// TODO, highlight search string
+      //var re = new RegExp(search, 'gi');
+      //text = termName.replace(re, '<span class="highlight">$&</span>');
+      return '<a href="#/' + termName + '">' + text + '</a>';
+    }
+  }])
+
+  .filter('htmlifyDefinition', ['dataService', function(dataService) {
+    return function(text, search) {
+      return vutil.htmlifyObject(text, dataService.cachedTermDict());
+      //// TODO, highlight search string
+      // var re = new RegExp(search, 'gi');
+      // return text.replace(re, '<span class="highlight">$&</span>');
+    }
+  }])
+
 ;
+
+})();

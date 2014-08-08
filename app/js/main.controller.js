@@ -268,22 +268,6 @@ function setWatchers($scope, $location) {
 
 function getTermList($scope, dataService, then) {
     var workId = $scope.works.add("making term list query");
-    var htmlify = true;
-
-    var prepareName = function(term) {
-        var name = term.name;
-        var termName = vutil.getTermName(name);
-        return htmlify ? vutil.htmlifyTerm(termName, name) : _.escape(termName)
-    };
-
-    var prepareDefinition = function(term) {
-        var def = term.definition;
-        return htmlify ? vutil.htmlifyObject(def, dataService.cachedTermDict()) : _.escape(def)
-    };
-
-    var prepareCanonicalUnits = function(term) {
-        return htmlify ? vutil.htmlifyObject(term.canonicalUnits) : _.escape(term.canonicalUnits)
-    };
 
     var gotTermList = function(error, termList) {
         //console.log("gotTermList: ", termList);
@@ -303,9 +287,9 @@ function getTermList($scope, dataService, then) {
 
         $scope.termList = _.map(termList, function(term) { // with htmlified or escaped uri's
             return {
-                name:           prepareName(term),
-                definition:     prepareDefinition(term),
-                canonicalUnits: prepareCanonicalUnits(term)
+                name:           term,
+                definition:     term.definition,
+                canonicalUnits: term.canonicalUnits
             };
         });
         $scope.works.remove(workId);

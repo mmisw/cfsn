@@ -232,3 +232,7 @@ td.generalInfoSect {
     padding-right: 10px;
     border: 1px solid #8cacbb;
 }
+
+.highlight {
+    background: yellow;
+}
