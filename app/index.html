@@ -22,33 +22,43 @@
                 <a href="#/" style="text-decoration: none"><img src="img/orrlogo50.png" style="vertical-align: baseline">
                 <span style="color: #0ebefa; font-size: large">CF Standard Names Vocabulary Browser</span></a>
                 <a style="color: #b7e1fa" href="https://github.com/mmisw/cfsn"
-                   target="_blank" title="GitHub repo">cfsn <span app-version></span></a>
+                   target="_blank" title="GitHub repo">cfsn&nbsp;<span app-version></span></a>
             </td>
-        </tr>
-    </table>
+            <td style="vertical-align: top">
 
     <div class="generalInfo" ng-show="generalInfo">
         <table>
+            <tr style="padding: 10px" >
+                <td class="generalInfoSect">
+                    <a href="http://cfconventions.org/documents.html" target="_blank"
+                       title="http://cfconventions.org/documents.html">Original vocabulary</a>
+                    <span ng-show="generalInfo.orr">
+                        v. {{generalInfo.orr.version_number}} ({{generalInfo.orr.last_modified}})
+                    </span>
+                </td>
+            </tr>
             <tr style="padding: 10px">
                 <td class="generalInfoSect">
-                    <a href="http://cfconventions.org/documents.html" target="_blank"> Original vocabulary </a>
-                    <span ng-show="generalInfo.orr">
-                        version_number: {{generalInfo.orr.version_number}} last modified: {{generalInfo.orr.last_modified}}
-                    </span>
+                    MMI ORR ontology:
+                    <a target="_blank" href="http://mmisw.org/ont/cf/parameter"
+                       title="v. {{generalInfo.orr.version}}">
+                        http://mmisw.org/ont/cf/parameter</a>
                 </td>
+            </tr>
+            <tr style="padding: 10px">
                 <td class="generalInfoSect">
-                    <a href="http://mmisw.org/ont/cf/parameter" target="_blank"> ORR ontology </a>
-                    <span ng-show="generalInfo.orr">
-                        version: {{generalInfo.orr.version}}
-                    </span>
-                </td>
-                <td class="generalInfoSect">
-                    <a href="http://vocab.nerc.ac.uk/collection/P07/" target="_blank"> NVS ontology </a>
-                    <span ng-show="generalInfo.nvs">version: {{generalInfo.nvs.version}}</span>
+                    NERC NVS ontology:
+                    <a target="_blank" href="http://vocab.nerc.ac.uk/collection/P07/"
+                        title="http://vocab.nerc.ac.uk/collection/P07/">
+                        http://vocab.nerc.ac.uk/collection/P07/</a>
                 </td>
             </tr>
         </table>
     </div>
+            </td>
+        </tr>
+    </table>
+
 
 
   <div class="status" ng-show="works.any()">
