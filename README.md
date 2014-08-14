@@ -28,6 +28,8 @@ and then open [http://localhost:8080/app/](http://localhost:8080/app/)
 
 ### Noteworthy changes
 
+- 0.1.5: fix \#23
+
 - 0.1.4: general info in separate lines and other minor adjustments.
 
 - 0.1.3: preliminary mappings included.

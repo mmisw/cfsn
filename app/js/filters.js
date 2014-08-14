@@ -16,8 +16,7 @@ angular.module('cfsn.filters', [])
   }])
 
   .filter('htmlifyTerm', [function() {
-    return function(term, search) {
-      var name = term.name;
+    return function(name, search) {
       var termName = vutil.getTermName(name);
       var text = termName;
       //// TODO, highlight search string

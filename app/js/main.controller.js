@@ -287,7 +287,7 @@ function getTermList($scope, dataService, then) {
 
         $scope.termList = _.map(termList, function(term) { // with htmlified or escaped uri's
             return {
-                name:           term,
+                name:           term.name,
                 definition:     term.definition,
                 canonicalUnits: term.canonicalUnits
             };
