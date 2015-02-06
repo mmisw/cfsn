@@ -1,8 +1,8 @@
 var cfsnConfig = {
 
     orr: {
-        website:        'http://mmisw.org/',
-        sparqlEndpoint: 'http://mmisw.org/sparql',
+        website:        'https://mmisw.org/',
+        sparqlEndpoint: 'https://mmisw.org/sparql',
         snPrefix:       'http://mmisw.org/ont/cf/parameter/',
 
         generalInfoQuery:
@@ -37,8 +37,8 @@ var cfsnConfig = {
     },
 
     nvs: {
-        website:        'http://vocab.nerc.ac.uk/',
-        sparqlEndpoint: 'http://vocab.nerc.ac.uk/sparql/sparql',
+        website:        'https://vocab.nerc.ac.uk/',
+        sparqlEndpoint: 'https://vocab.nerc.ac.uk/sparql/sparql',
         uriQueryTemplate:
             "prefix skos: <http://www.w3.org/2004/02/skos/core#>\n" +
             'select distinct ?uri {?uri skos:prefLabel "{{stdname}}"@en .}'

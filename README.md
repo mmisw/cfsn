@@ -3,7 +3,7 @@ cfsn
 
 A CF Standard Names Vocabulary browser -- prototype
 
-Deployment available at http://mmisw.org/cfsn
+Deployment available at https://mmisw.org/cfsn
 
 See the [wiki](https://github.com/mmisw/cfsn/wiki) for documentation.
 
@@ -27,6 +27,8 @@ and then open [http://localhost:8080/app/](http://localhost:8080/app/)
 
 
 ### Noteworthy changes
+
+- 0.1.6: fixing \#24
 
 - 0.1.5: fix \#23
 
